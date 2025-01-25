@@ -1,38 +1,40 @@
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
 
 /* 全域 */
-*,*::before,*::after{
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-img{
+img {
   height: auto;
   max-width: 100%;
   vertical-align: middle;
 }
 
-a{
+a {
   text-decoration: none;
   color: black;
 }
 
-h1{
+h1 {
   font-size: 32px;
   font-weight: bolder;
   width: 100%;
 }
 
-h2{
+h2 {
   font-size: 24px;
   font-weight: bolder;
-  text-align:center;
+  text-align: center;
   width: 90%;
   line-height: 1.2;
 }
 
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans", sans-serif;
   line-height: 1.5;
   font-size: 24px;
   margin: 0 auto;
@@ -56,7 +58,7 @@ header {
   margin: 2cm 0 10px 0;
 }
 
-.copyright{
+.copyright {
   font-size: 10px;
   color: #666;
   margin-top: 10px;
@@ -130,12 +132,11 @@ footer {
 /* 查詢結果樣式 */
 #query-result {
   word-wrap: break-word; /* 強制長字串換行 */
-  white-space: normal;  /* 防止文字過長不換行 */
-  max-width: 100%;      /* 確保不超過彈出視窗的寬度 */
-  overflow: auto;       /* 如果文字超過可見區域會顯示滾動條 */
-  padding: 10px 0;      /* 給文字一點上下邊距 */
+  white-space: normal; /* 防止文字過長不換行 */
+  max-width: 100%; /* 確保不超過彈出視窗的寬度 */
+  overflow: auto; /* 如果文字超過可見區域會顯示滾動條 */
+  padding: 10px 0; /* 給文字一點上下邊距 */
 }
-
 
 .action-buttons {
   max-width: 100%;
@@ -145,17 +146,17 @@ footer {
 button {
   padding: 15px 35px;
   margin: 10px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;;
+  font-size: 18px;
 }
 
 #cancel-btn {
   background-color: #ffffff;
-  color: #007BFF;
+  color: #007bff;
   border: #333 1px solid;
 }
 
