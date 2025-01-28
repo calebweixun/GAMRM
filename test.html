@@ -10,18 +10,23 @@
   <body>
     <div class="data-container" id="dataContainer" style="display: flex">
       <h3>請確認以下資料，並於修改後確認更新</h3>
-      <label for="name">姓名:</label>
-      <input type="text" id="name" value="${data.Name}" />
-      <br />
-      <label for="nickname">暱稱/英文名:</label>
-      <input type="text" id="nickname" value="${data.NickName}" />
-      <br />
-      <label for="phone">手機號:</label>
-      <input type="text" id="phone" value="${data.Phone}" />
-      <br />
-      <label for="lineId">LINE ID:</label>
-      <input type="text" id="lineId" value="${data.LINEID}" />
-      <br />
+      <div class="input-area">
+        <label for="name">姓名</label>
+        <input type="text" id="name" value="${data.Name}" />
+      </div>
+      <div class="input-area">
+        <label for="nickname">暱稱/英文名</label>
+        <input type="text" id="nickname" value="${data.NickName}" />
+      </div>
+      <div class="input-area">
+        <label for="phone">手機</label>
+        <input type="text" id="phone" value="${data.Phone}" />
+      </div>
+      <div class="input-area">
+        <label for="lineId">LINE ID</label>
+        <input type="text" id="lineId" value="${data.LINEID}" />
+      </div>
+      <p>如要修改Email，請洽GA工作人員</p>
       <input type="button" value="確認更新" onclick="updateUserData()" />
     </div>
   </body>

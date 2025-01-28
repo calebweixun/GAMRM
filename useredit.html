@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GA使用者資料更新介面</title>
     <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="userupdate.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="useredit.css" />
   </head>
   <body>
+    <header>
+      <div class="logo">
+        <img src="./logo.png" alt="logo" />
+      </div>
+    </header>
     <div class="container">
       <!-- Email 搜尋表單 -->
       <div class="form-container">
-        <label for="email"></label>
-        <input type="text" id="email" placeholder="請輸入 Email 查詢個人資料" />
+        <label for="email">請輸入 Email 查詢個人資料</label>
+        <input type="text" id="email" placeholder="example@domain.com" />
         <input type="button" value="搜尋" onclick="searchUserData()" />
       </div>
 
@@ -22,7 +28,14 @@
       <!-- 顯示資料區域 -->
       <div class="data-container" id="dataContainer"></div>
     </div>
+    <footer>
+      <p>此頁面提供GA人進行個人資料維護</p>
+      <br />
 
+      <div class="copyright">
+        <p>Page build by 2025 GA資訊組</p>
+      </div>
+    </footer>
     <script>
       <!-- JavaScript 文件 -->
       var url =
@@ -70,26 +83,33 @@
 
         if (data.Status === "Not Found") {
           container.style.display = "flex"; // 隱藏 加載提示
-          container.innerHTML = "找不到相關資料，請洽GA招待組人員";
+          container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
           return;
         }
 
         // 顯示資料並提供 修改框
         container.innerHTML = `
-            <h3>請確認以下資料，並於修改後確認更新</h3>
-            <label for="name">姓名:</label>
-            <input type="text" id="name" value="${data.Name}">
-            <br>
-            <label for="nickname">暱稱/英文名:</label>
-            <input type="text" id="nickname" value="${data.NickName}">
-            <br>
-            <label for="phone">手機號:</label>
-            <input type="text" id="phone" value="${data.Phone}">
-            <br>
-            <label for="lineId">LINE ID:</label>
-            <input type="text" id="lineId" value="${data.LINEID}">
-            <br>
-            <input type="button" value="確認更新" onclick="updateUserData()">
+            <div class="data-container" id="dataContainer" style="display: flex">
+              <h3>請確認以下資料，並於修改後確認更新</h3>
+              <div class="input-area">
+                <label for="name">姓名</label>
+                <input type="text" id="name" value="${data.Name}" />
+              </div>
+              <div class="input-area">
+                <label for="nickname">暱稱/英文名</label>
+                <input type="text" id="nickname" value="${data.NickName}" />
+              </div>
+              <div class="input-area">
+                <label for="phone">手機</label>
+                <input type="text" id="phone" value="${data.Phone}" />
+              </div>
+              <div class="input-area">
+                <label for="lineId">LINE ID</label>
+                <input type="text" id="lineId" value="${data.LINEID}" />
+              </div>
+              <h3>如要修改Email，請洽GA工作人員</h3>
+              <input type="button" value="確認更新" onclick="updateUserData()" />
+            </div>
             `;
 
         // 顯示資料區塊
@@ -133,6 +153,7 @@
           .then((data) => {
             if (data.status === "OK") {
               alert("資料已更新！");
+              window.location.reload();
               return;
             } else {
               alert("更新失敗，請稍後再試！");
