@@ -12,7 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: space-between;
-  //height: 100vh;
+  /* height: 100vh; */
   background-color: #ffe2e2;
 }
 
@@ -63,6 +63,10 @@ label {
   text-align: left;
 }
 
+div#dataContainer {
+  justify-content: center;
+}
+
 .data-container {
   padding: 20px;
   /* background-color: #f9f9f9; */
@@ -88,6 +92,13 @@ label {
   font-size: 1em;
 }
 
+.qr-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .input-area {
   width: 100%;
   display: flex;
@@ -96,13 +107,49 @@ label {
   font-size: 18px;
 }
 
-.input-area input {
-  max-width: 60%;
-}
-
 .input-area label {
   display: block;
   max-width: 40%;
+}
+
+/* 全局樣式，對應 input-area 的一致設計 */
+.input-area select,
+.input-area input {
+  width: 100%;
+  max-width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+/* 當獲取焦點時的樣式 */
+.input-area select:focus,
+.input-area input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 調整 option 的樣式 */
+.input-area select option {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+}
+
+/* 禁用狀態的樣式 */
+.input-area select:disabled,
+.input-area input:disabled {
+  background-color: #f5f5f5;
+  color: #aaa;
+  cursor: not-allowed;
 }
 
 input[type="button"] {
@@ -118,6 +165,7 @@ input[type="button"]:hover {
 
 #loading {
   display: none;
+  justify-content: center;
   margin-top: 20px;
   font-size: 16px;
   color: #333;
@@ -126,10 +174,11 @@ input[type="button"]:hover {
 /* 響應式設計 */
 @media screen and (max-width: 600px) {
   .container {
+    width: 95%;
     padding: 15px;
   }
   h2 {
-    font-size: 1.2em;
+    font-size: 0.8em;
   }
   label {
     font-size: 0.7em;

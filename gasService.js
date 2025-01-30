@@ -1,0 +1,384 @@
+
+// Google Apps Script URL
+var url =
+    "https://script.google.com/macros/s/AKfycbxjXUF-tnhQHyvJJx4RPEBiymE6SlnZPx6EMDqVnrzUdYi62ROwa46betw0P66ICbT2vA/exec";
+
+async function qrSignIn(gaid) {
+    console.log(gaid);
+
+    document.getElementById("loading").style.display = "block";
+    document.body.style.cursor = "wait";
+
+    var params = new URLSearchParams({
+        action: "qrSignInGet",
+        gaid: gaid,
+    });
+
+    try {
+        let response = await fetch(url + "?" + params.toString(), {
+            method: "GET",
+            headers: {
+                "Content-Type": "text/plain",
+            },
+        });
+        let data = await response.json();
+
+        document.body.style.cursor = "default";
+        document.getElementById("loading").style.display = "none";
+
+        let container = document.getElementById("query-result");
+        container.innerHTML = `
+                <p>${data.Name || ""} ${data.NickName || ""}</p>
+                <p>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</p>
+            `;
+
+        return data; // ✅ 這樣 data 才能傳回去
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("loading").style.display = "none";
+        alert("連線時發生錯誤，請稍後再試！");
+        return null; // ⚠ 確保有回傳值
+    }
+}
+
+
+
+/**
+ * Searches for user data by email from the server.
+ * Retrieves user information and displays it in the data container.
+ * Shows a loading indicator while the request is in progress.
+ * Alerts the user if no email is entered.
+ *  userProfileEdit.html
+ */
+function searchUserData(event) {
+    var email = document.getElementById("email").value;
+    console.log(email);
+    console.log(event);
+    if (!email) {
+        alert("尚未輸入 Email！");
+        return;
+    }
+
+    document.getElementById("dataContainer").style.display = "none";
+    document.getElementById("loading").style.display = "flex";
+    document.body.style.cursor = "wait";
+
+    var params = new URLSearchParams({
+        action: "getUserInfo",
+        email: email,
+    });
+
+    fetch(url + "?" + params.toString(), {
+        method: "GET",
+        headers: {
+            "Content-Type": "text/plain",
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+            document.body.style.cursor = "default";
+            if (event === "edit") {
+                displayData(data);
+                document.getElementById("loading").style.display = "none";
+
+            } else if (event === "qrshow") {
+                qrShow(data);
+                document.getElementById("loading").style.display = "none";
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error)
+            document.getElementById("loading").style.display = "none";
+            alert("連線時發生錯誤，請稍後再試！");
+        }
+
+        );
+}
+
+function displayData(data) {
+    var container = document.getElementById("dataContainer");
+    container.innerHTML = "";
+    document.getElementById("loading").style.display = "none";
+
+    if (data.Status === "Not Found") {
+        container.style.display = "flex";
+        container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
+        return;
+    }
+
+    container.innerHTML = `
+          <div class="data-container" style="display: flex">
+            <h3>請確認以下資料，並於修改後確認更新</h3>
+            <div class="input-area">
+              <label for="gaid">GAID</label>
+              <input type="text" id="gaid" value="${data.GAID || ""
+        }" disabled />
+            </div>
+            <div class="input-area">
+              <label for="name">姓名</label>
+              <input type="text" id="name" value="${data.Name || ""}" />
+            </div>
+            <div class="input-area">
+              <label for="nickname">暱稱/英文名</label>
+              <input type="text" id="nickname" value="${data.NickName || ""}" />
+            </div>
+            <div class="input-area">
+              <label for="phone">手機</label>
+              <input type="text" id="phone" value="${data.Phone || ""}" />
+            </div>
+            <div class="input-area">
+              <label for="lineId">LINE ID</label>
+              <input type="text" id="lineId" value="${data.LINEID || ""}" />
+            </div>
+            <div class="input-area">
+              <label for="guild">所在公會</label>
+              <select id="guild">
+                <option value="">尚未加入</option>
+                <option value="陌開">陌開</option>
+                <option value="文案">文案</option>
+                <option value="攝影">攝影</option>
+                <option value="影音">影音</option>
+                <option value="音樂">音樂</option>
+                <option value="設計">設計</option>
+                <option value="營運組">營運組</option>
+              </select>
+            </div>
+            <div class="input-area">
+              <label for="role">身分別</label>
+              <input type="text" id="role" value="${data.Role || ""
+        }" disabled />
+            </div>
+            <div class="input-area">
+              <label for="level">GA等級</label>
+              <input type="text" id="level" value="${data.Level || ""
+        }" disabled />
+            </div>
+            <h3>如要修改Email，請洽GA工作人員</h3>
+            <input type="button" value="確認更新" onclick="updateUserData()" />
+          </div>
+        `;
+
+    container.style.display = "block";
+
+    // 設定下拉選單的預設值
+    const guildSelect = document.getElementById("guild");
+    if (data.Guild) {
+        guildSelect.value = data.Guild;
+    }
+}
+
+function qrShow(data) {
+    var container = document.getElementById("dataContainer");
+    container.innerHTML = "";
+    document.getElementById("loading").style.display = "none";
+
+    if (data.Status === "Not Found") {
+        container.style.display = "flex";
+        container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
+        return;
+    }
+
+    container.innerHTML = `
+      <div class="data-container" style="display: flex">
+        <h3>歡迎回到GA，請使用QR給招待組進行簽到</h3>
+        <div class="qr-area">
+          <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
+        </div>
+        <h2>${data.Name || ""} ${data.NickName || ""}</h2>
+        <h3>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</h3>
+      </div>
+        `;
+
+    container.style.display = "block";
+}
+
+
+/**
+ *  Search user data by email and update user data to GAS.
+ *  userProfileEdit.html
+ *  @return {void}
+ */
+function updateUserData() {
+    var email = document.getElementById("email").value;
+    //var gaid = document.getElementById("gaid").value;
+    var name = document.getElementById("name").value;
+    var nickname = document.getElementById("nickname").value;
+    var phone = document.getElementById("phone").value;
+    var lineId = document.getElementById("lineId").value;
+    var guild = document.getElementById("guild").value;
+
+    // 檢查必填欄位
+    if (!name || !nickname || !phone || !lineId || !guild) {
+        alert("請填寫所有欄位！");
+        return;
+    }
+
+    var params = new URLSearchParams({
+        action: "updateUserInfo",
+        email: email,
+        name: name,
+        nickname: nickname,
+        phone: phone,
+        lineId: lineId,
+        guild: guild,
+    });
+    console.log(params.toString());
+
+    fetch(url + "?" + params.toString(), {
+        method: "GET",
+        headers: {
+            "Content-Type": "text/plain",
+        },
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Success:", data.Status);
+            if (data.Status === "OK") {
+                alert("資料已更新！");
+                window.location.reload();
+            } else {
+                alert("更新失敗，請稍後再試！");
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("發生錯誤，請稍後再試！");
+        });
+}
+
+/**
+ * Checks if the email address is already registered in the GAS database.
+ * If not, shows a form to fill in the user's information and creates a new user in the GAS database.
+ * If the email address is already registered, shows an error message.
+ * @return {void}
+ */
+async function isEmailDuplicate() {
+    const email = document.getElementById("email").value.trim();
+    const loading = document.getElementById("loading");
+    const dataContainer = document.getElementById("dataContainer");
+
+    if (!email) {
+        alert("請輸入有效的 Email");
+        return;
+    }
+
+    // 顯示加載提示
+    loading.style.display = "flex";
+    dataContainer.style.display = "none";
+
+    try {
+        // 發送請求到 Apps Script
+        const response = await fetch(
+            `${url}?action=getUserInfo&email=${encodeURIComponent(email)}`
+        );
+        const result = await response.json();
+        console.log(result);
+
+        if (result.Status === "Not Found") {
+            // 顯示表單
+            dataContainer.style.display = "block";
+            dataContainer.innerHTML = `<div class="data-container" style="display: flex">
+                <h3>請填寫以下個人資料</h3>
+                <div class="input-area">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" />
+                </div>
+                <div class="input-area">
+                    <label for="nickname">暱稱/英文名</label>
+                    <input type="text" id="nickname" />
+                </div>
+                <div class="input-area">
+                    <label for="phone">手機</label>
+                    <input type="text" id="phone" />
+                </div>
+                <div class="input-area">
+                    <label for="lineId">LINE ID</label>
+                    <input type="text" id="lineId" />
+                </div>
+                <div class="input-area">
+                    <label for="guild">欲加入公會</label>
+                    <select id="guild">
+                    <option value="">請選擇</option>
+                    <option value="陌開">陌開</option>
+                    <option value="文案">文案</option>
+                    <option value="攝影">攝影</option>
+                    <option value="影音">影音</option>
+                    <option value="音樂">音樂</option>
+                    <option value="設計">設計</option>
+                    <option value="營運組">營運組</option>
+                    </select>
+                </div>
+                <input type="button" value="加入GA" onclick="createUserData()" />
+                </div>`;
+        } else {
+            alert("此 Email 已經存在，無法重複建立使用者。");
+        }
+    } catch (error) {
+        console.error("請求失敗", error);
+        alert("發生錯誤，請稍後再試。");
+    } finally {
+        loading.style.display = "none";
+    }
+}
+
+/**
+ *  Search user data by email from the server.
+ *  Retrieves user information and displays it in the data container.
+ *  Shows a loading indicator while the request is in progress.
+ *  Alerts the user if no email is entered.
+ *  userCreate.html
+ */
+async function createUserData() {
+    const email = document.getElementById("email").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const nickname = document.getElementById("nickname").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const lineId = document.getElementById("lineId").value.trim();
+    const guild = document.getElementById("guild").value;
+
+    if (!email || !name || !nickname || !phone || !lineId || !guild) {
+        alert("請填寫完整的資料！");
+        return;
+    }
+
+    console.log(`${url}?action=createUser&email=${encodeURIComponent(
+        email
+    )}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(
+        nickname
+    )}&phone=${encodeURIComponent(phone)}&lineId=${encodeURIComponent(
+        lineId
+    )}&guild=${encodeURIComponent(guild)}`);
+
+    try {
+        // 發送請求到 Apps Script
+        const response = await fetch(
+            `${url}?action=createUser&email=${encodeURIComponent(
+                email
+            )}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(
+                nickname
+            )}&phone=${encodeURIComponent(phone)}&lineId=${encodeURIComponent(
+                lineId
+            )}&guild=${encodeURIComponent(guild)}`,
+            {
+                method: "GET",
+            }
+        );
+        const result = await response.json();
+
+        if (result.Status === "Success") {
+            alert("使用者資料新增成功！");
+            location.reload();
+        } else {
+            alert("新增失敗：" + result.Message);
+        }
+    } catch (error) {
+        console.error("請求失敗", error);
+        alert("發生錯誤，請稍後再試。");
+    }
+}

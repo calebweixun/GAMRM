@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>GA使用者資料建立介面</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/userQRScan.css" />
+    <link rel="stylesheet" href="css/userProfileEdit.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="img/logo.png" alt="logo" />
+      </div>
+    </header>
+    <div class="container">
+      <!-- Email 搜尋表單 -->
+      <div class="form-container">
+        <label for="email">GA使用者資料資料建立</label>
+        <input type="text" id="email" placeholder="請輸入個人Email進行建檔" />
+        <input type="button" value="確認" onclick="isEmailDuplicate()" />
+      </div>
+
+      <!-- 查詢加載提示 -->
+      <div id="loading"><h2>正在確認email，請稍候...</h2></div>
+
+      <!-- 顯示資料區域 -->
+      <div id="dataContainer"></div>
+    </div>
+    <footer>
+      <br />
+      <div class="copyright">
+        <p>Page build by 2025 GA資訊組</p>
+      </div>
+    </footer>
+    <script src="gasService.js"></script>
+  </body>
+</html>

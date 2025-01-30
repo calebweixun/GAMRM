@@ -29,7 +29,6 @@ h2 {
   font-size: 24px;
   font-weight: bolder;
   text-align: center;
-  width: 90%;
   line-height: 1.2;
 }
 
@@ -50,12 +49,12 @@ body {
 
 header {
   max-width: 100%;
-  margin: 50px 0 50px 0;
+  margin: 0 0 10px 0;
 }
 
 .logo {
   max-width: 150px;
-  margin: 2cm 0 10px 0;
+  margin: 20px 0 10px 0;
 }
 
 .copyright {
@@ -130,7 +129,7 @@ footer {
 }
 
 /* 查詢結果樣式 */
-#query-result {
+#query-result p {
   word-wrap: break-word; /* 強制長字串換行 */
   white-space: normal; /* 防止文字過長不換行 */
   max-width: 100%; /* 確保不超過彈出視窗的寬度 */
