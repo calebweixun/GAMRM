@@ -62,8 +62,16 @@ function searchUserData(event) {
     }
 
     document.getElementById("dataContainer").style.display = "none";
+
+    if (event === "qrshow") {
+        document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
+    } else if (event === "edit") {
+        document.getElementById("loading-text").innerText = "正在查詢資料...";
+    }
+
     document.getElementById("loading").style.display = "flex";
     document.body.style.cursor = "wait";
+
 
     var params = new URLSearchParams({
         action: "getUserInfo",
@@ -174,8 +182,6 @@ function qrShow(data) {
     var container = document.getElementById("dataContainer");
     container.innerHTML = "";
     document.getElementById("loading").style.display = "none";
-    document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
-
     if (data.Status === "Not Found") {
         container.style.display = "flex";
         container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
