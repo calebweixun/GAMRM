@@ -4,6 +4,7 @@
     <base href="/GAMRM/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/userQRScan.css" />
     <link rel="stylesheet" href="css/userProfileEdit.css" />
@@ -17,11 +18,17 @@
       </div>
     </header>
     <div class="container">
-      <h1>招待人員驗證</h1>
-      <input type="password" id="password" placeholder="請輸入密碼" />
-      <button id="verifyBtn">確認</button>
+      <div class="form-container">
+        <label for="password">請輸入招待人員用密碼</label>
+        <input type="password" id="password" placeholder="請輸入密碼" />
+        <input
+          type="button"
+          id="verifyBtn"
+          value="驗證"
+          onclick="verifycode()"
+        />
+      </div>
     </div>
-
     <script src="js/verify.js"></script>
   </body>
 </html>

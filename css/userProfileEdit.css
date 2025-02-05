@@ -40,7 +40,8 @@ h2 {
 
 input[type="text"],
 input[type="button"],
-input[type="number"] {
+input[type="number"],
+input[type="password"] {
   padding: 12px;
   /* margin-top: 20px; */
   width: 70%;
@@ -52,7 +53,8 @@ input[type="number"] {
 }
 
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="password"]:focus {
   outline: none;
   border-color: #66afe9;
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
@@ -186,7 +188,8 @@ input[type="button"]:hover {
 
   input[type="text"],
   input[type="button"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="password"] {
     font-size: 14px;
     padding: 10px;
     width: 100%;
@@ -208,7 +211,8 @@ input[type="button"]:hover {
   }
   input[type="text"],
   input[type="button"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="password"] {
     font-size: 14px;
   }
 }
