@@ -84,14 +84,14 @@ div#dataContainer {
 
 .data-container h3 {
   color: #333;
-  font-size: 0.6em;
+  font-size: 0.8em;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .data-container p {
   color: #333;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
 .qr-area {
@@ -204,10 +204,10 @@ input[type="button"]:hover {
     max-width: 300px; /* 設置最大寬度為 300px */
   }
   h2 {
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
   .data-container h3 {
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
   input[type="text"],
   input[type="button"],

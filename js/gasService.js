@@ -184,7 +184,8 @@ function qrShow(data) {
 
     container.innerHTML = `
       <div class="data-container" style="display: flex">
-        <h3>歡迎回到GA，請使用QR給招待組進行簽到</h3>
+        <h3>歡迎回到GA</h3>
+        <h3>請以此QR給招待組進行簽到</h3>
         <div class="qr-area">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
