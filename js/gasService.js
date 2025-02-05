@@ -7,7 +7,6 @@ async function qrSignIn(gaid) {
     console.log(gaid);
 
     document.getElementById("loading").style.display = "block";
-    document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
     document.body.style.cursor = "wait";
 
     var params = new URLSearchParams({
@@ -29,8 +28,10 @@ async function qrSignIn(gaid) {
 
         let container = document.getElementById("query-result");
         container.innerHTML = `
-                <p>${data.Name || ""} ${data.NickName || ""}</p>
-                <p>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.signInCount || "0"}</p>
+                <p>${data.Name || ""}</p>
+                <p>${data.NickName || ""}</p>
+                <p>${data.Role || ""}:${data.Guild || ""}</p>
+                <p>本季度簽到次數:${data.signInCount || "0"}</p>
             `;
 
         return data;
@@ -173,6 +174,7 @@ function qrShow(data) {
     var container = document.getElementById("dataContainer");
     container.innerHTML = "";
     document.getElementById("loading").style.display = "none";
+    document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
 
     if (data.Status === "Not Found") {
         container.style.display = "flex";
@@ -186,8 +188,9 @@ function qrShow(data) {
         <div class="qr-area">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
-        <h2>${data.Name || ""} ${data.NickName || ""}</h2>
-        <h3>${data.Role || ""}, ${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</h3>
+        <h2>${data.Name || ""}  ${data.NickName || ""}</h2>
+        <p>${data.Role || ""}:${data.Guild || ""}</p>
+        <p>本季度簽到次數:${data.signInCount || "0"}</p>
       </div>
         `;
 
