@@ -6,6 +6,7 @@ var url =
 async function qrSignIn(gaid) {
     const signbtn = document.getElementById("action-buttons");
     signbtn.style.display = "none";
+
     console.log(gaid);
 
     document.getElementById("loading").style.display = "block";
