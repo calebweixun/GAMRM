@@ -30,7 +30,7 @@ async function qrSignIn(gaid) {
         let container = document.getElementById("query-result");
         container.innerHTML = `
                 <p>${data.Name || ""} ${data.NickName || ""}</p>
-                <p>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</p>
+                <p>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.signInCount || "0"}</p>
             `;
 
         return data;
