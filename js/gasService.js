@@ -32,12 +32,12 @@ async function qrSignIn(gaid) {
                 <p>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</p>
             `;
 
-        return data; // ✅ 這樣 data 才能傳回去
+        return data;
     } catch (error) {
         console.error("Error:", error);
         document.getElementById("loading").style.display = "none";
         alert("連線時發生錯誤，請稍後再試！");
-        return null; // ⚠ 確保有回傳值
+        return null;
     }
 }
 
@@ -314,7 +314,7 @@ async function isEmailDuplicate() {
                     <option value="營運組">營運組</option>
                     </select>
                 </div>
-                <input type="button" value="加入GA" onclick="createUserData()" />
+                    <input id="createUser" type="button" value="加入GA" onclick="createUserData()" />
                 </div>`;
         } else {
             alert("此 Email 已經存在，無法重複建立使用者。");
@@ -335,12 +335,20 @@ async function isEmailDuplicate() {
  *  userCreate.html
  */
 async function createUserData() {
-    const email = document.getElementById("email").value.trim();
-    const name = document.getElementById("name").value.trim();
-    const nickname = document.getElementById("nickname").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const lineId = document.getElementById("lineId").value.trim();
-    const guild = document.getElementById("guild").value;
+    const emailElem = document.getElementById("email");
+    const nameElem = document.getElementById("name");
+    const nicknameElem = document.getElementById("nickname");
+    const phoneElem = document.getElementById("phone");
+    const lineIdElem = document.getElementById("lineId");
+    const guildElem = document.getElementById("guild");
+    const createUserBtn = document.getElementById("createUser");
+
+    const email = emailElem.value.trim();
+    const name = nameElem.value.trim();
+    const nickname = nicknameElem.value.trim();
+    const phone = phoneElem.value.trim();
+    const lineId = lineIdElem.value.trim();
+    const guild = guildElem.value;
 
     if (!email || !name || !nickname || !phone || !lineId || !guild) {
         alert("請填寫完整的資料！");
@@ -373,7 +381,17 @@ async function createUserData() {
 
         if (result.Status === "Success") {
             alert("使用者資料新增成功！");
-            location.reload();
+
+            emailElem.disabled = true;
+            nameElem.disabled = true;
+            nicknameElem.disabled = true;
+            phoneElem.disabled = true;
+            lineIdElem.disabled = true;
+            guildElem.disabled = true;
+            createUserBtn.disabled = true;
+            createUserBtn.value = "已註冊完成";
+
+            searchUserData("qrshow");
         } else {
             alert("新增失敗：" + result.Message);
         }
