@@ -7,7 +7,7 @@ function verifycode() {
   // 比對密碼是否正確
   if (inputPassword === validPassword) {
     // 密碼正確，跳轉到掃描器頁面
-    window.location.href = "verifyQRScan"; // 請依實際路徑修改
+    window.location.href = "userQRScan"; // 請依實際路徑修改
   } else {
     // 密碼錯誤，顯示警告訊息
     alert("密碼錯誤，拒絕存取！");
