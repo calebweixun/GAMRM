@@ -4,6 +4,8 @@ var url =
     "https://script.google.com/macros/s/AKfycbxjXUF-tnhQHyvJJx4RPEBiymE6SlnZPx6EMDqVnrzUdYi62ROwa46betw0P66ICbT2vA/exec";
 
 async function qrSignIn(gaid) {
+    const signbtn = document.getElementById("action-buttons");
+    signbtn.style.display = "none";
     console.log(gaid);
 
     document.getElementById("loading").style.display = "block";
@@ -30,10 +32,10 @@ async function qrSignIn(gaid) {
         container.innerHTML = `
                 <p>${data.Name || ""}</p>
                 <p>${data.NickName || ""}</p>
-                <p>${data.Role || ""}:${data.Guild || ""}</p>
+                <p>${data.Role || ""}@${data.Guild || ""}</p>
                 <p>本季度簽到次數:${data.signInCount || "0"}</p>
             `;
-
+        signbtn.style.display = "block";
         return data;
     } catch (error) {
         console.error("Error:", error);
@@ -196,7 +198,7 @@ function qrShow(data) {
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
         <h2>${data.Name || ""}  ${data.NickName || ""}</h2>
-        <p>${data.Role || ""}:${data.Guild || ""}</p>
+        <p>${data.Role || ""}@${data.Guild || ""}</p>
         <p>本季度簽到次數:${data.signInCount || "0"}</p>
       </div>
         `;
