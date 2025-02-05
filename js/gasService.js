@@ -137,12 +137,12 @@ function displayData(data) {
               <label for="guild">所在公會</label>
               <select id="guild">
                 <option value="">尚未加入</option>
-                <option value="陌開">陌開</option>
-                <option value="文案">文案</option>
-                <option value="攝影">攝影</option>
-                <option value="影音">影音</option>
-                <option value="音樂">音樂</option>
-                <option value="設計">設計</option>
+                <option value="陌開公會">陌開</option>
+                <option value="文案公會">文案</option>
+                <option value="攝影公會">攝影</option>
+                <option value="影音公會">影音</option>
+                <option value="音樂公會">音樂</option>
+                <option value="設計公會">設計</option>
                 <option value="營運組">營運組</option>
               </select>
             </div>
@@ -309,13 +309,12 @@ async function isEmailDuplicate() {
                     <label for="guild">欲加入公會</label>
                     <select id="guild">
                     <option value="">請選擇</option>
-                    <option value="陌開">陌開</option>
-                    <option value="文案">文案</option>
-                    <option value="攝影">攝影</option>
-                    <option value="影音">影音</option>
-                    <option value="音樂">音樂</option>
-                    <option value="設計">設計</option>
-                    <option value="營運組">營運組</option>
+                    <option value="陌開公會">陌開</option>
+                    <option value="文案公會">文案</option>
+                    <option value="攝影公會">攝影</option>
+                    <option value="影音公會">影音</option>
+                    <option value="音樂公會">音樂</option>
+                    <option value="設計公會">設計</option>
                     </select>
                 </div>
                     <input id="createUser" type="button" value="加入GA" onclick="createUserData()" />
