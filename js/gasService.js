@@ -7,6 +7,7 @@ async function qrSignIn(gaid) {
     console.log(gaid);
 
     document.getElementById("loading").style.display = "block";
+    document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
     document.body.style.cursor = "wait";
 
     var params = new URLSearchParams({
@@ -186,7 +187,7 @@ function qrShow(data) {
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
         <h2>${data.Name || ""} ${data.NickName || ""}</h2>
-        <h3>${data.Role || ""}:${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</h3>
+        <h3>${data.Role || ""}, ${data.Guild || ""}, 本季度簽到次數:${data.checkInCount || "0"}</h3>
       </div>
         `;
 
