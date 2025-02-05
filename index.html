@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
+    <base href="/GAMRM/" />
+    <!-- This is the base URL for the relative path -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.png" type="image/png" />
@@ -23,20 +25,20 @@
     <div class="container">
       <button
         class="button"
-        onclick="location.href='/userQRScan'"
+        onclick="location.href='userQRScan'"
         style="background-color: #dc8533"
       >
         <i class="material-icons">barcode_reader</i> 招待組簽到掃描
       </button>
-      <button class="button" onclick="location.href='/userQRshow'">
+      <button class="button" onclick="location.href='userQRshow'">
         <i class="material-icons">qr_code</i> 個人簽到用QR顯示
       </button>
-      <button class="button" onclick="location.href='/userProfileEdit'">
+      <button class="button" onclick="location.href='userProfileEdit'">
         <i class="material-icons">person</i> 個人資料維護
       </button>
       <button
         class="button"
-        onclick="location.href='/userCreate'"
+        onclick="location.href='userCreate'"
         style="background-color: #3377dc"
       >
         <i class="material-icons">person_add</i> 新朋友加入
