@@ -37,6 +37,7 @@ async function qrSignIn(gaid) {
                 <p>本季度簽到次數:${data.signInCount || "0"}</p>
             `;
         signbtn.style.display = "block";
+
         return data;
     } catch (error) {
         console.error("Error:", error);
@@ -57,6 +58,8 @@ async function qrSignIn(gaid) {
  */
 function searchUserData(event) {
     var email = document.getElementById("email").value;
+    const confirmButtonbtn = document.getElementById("confirmButton");
+    confirmButtonbtn.disabled = true;
     console.log(email);
     console.log(event);
     if (!email) {
@@ -98,6 +101,7 @@ function searchUserData(event) {
             } else if (event === "qrshow") {
                 qrShow(data);
                 document.getElementById("loading").style.display = "none";
+
             }
         })
         .catch((error) => {
@@ -107,6 +111,7 @@ function searchUserData(event) {
         }
 
         );
+    onfirmButtonbtn.disabled = false;
 }
 
 function displayData(data) {
@@ -168,7 +173,7 @@ function displayData(data) {
         }" disabled />
             </div>
             <h3>如要修改Email，請洽GA工作人員</h3>
-            <input type="button" value="確認更新" onclick="updateUserData()" />
+            <input id="updateUser" type="button" value="確認更新" onclick="updateUserData()" />
           </div>
         `;
 
@@ -222,6 +227,9 @@ function updateUserData() {
     var lineId = document.getElementById("lineId").value;
     var guild = document.getElementById("guild").value;
 
+    const confirmButtonbtn = document.getElementById("updateUser");
+    confirmButtonbtn.disabled = true;
+
     // 檢查必填欄位
     if (!name || !nickname || !phone || !lineId || !guild) {
         alert("請填寫所有欄位！");
@@ -264,6 +272,8 @@ function updateUserData() {
             console.error("Error:", error);
             alert("發生錯誤，請稍後再試！");
         });
+
+    confirmButtonbtn.disabled = false;
 }
 
 /**
@@ -276,6 +286,7 @@ async function isEmailDuplicate() {
     const email = document.getElementById("email").value.trim();
     const loading = document.getElementById("loading");
     const dataContainer = document.getElementById("dataContainer");
+    const confirmButtonbtn = document.getElementById("confirmButton");
 
     if (!email) {
         alert("請輸入有效的 Email");
@@ -285,6 +296,7 @@ async function isEmailDuplicate() {
     // 顯示加載提示
     loading.style.display = "flex";
     dataContainer.style.display = "none";
+    confirmButtonbtn.disabled = true;
 
     try {
         // 發送請求到 Apps Script
@@ -363,6 +375,8 @@ async function createUserData() {
     const lineId = lineIdElem.value.trim();
     const guild = guildElem.value;
 
+    createUserBtn.disabled = true;
+
     if (!email || !name || !nickname || !phone || !lineId || !guild) {
         alert("請填寫完整的資料！");
         return;
@@ -401,15 +415,18 @@ async function createUserData() {
             phoneElem.disabled = true;
             lineIdElem.disabled = true;
             guildElem.disabled = true;
-            createUserBtn.disabled = true;
+
             createUserBtn.value = "已註冊完成";
 
             searchUserData("qrshow");
+            document.getElementById("confirmButton").disabled = false;
         } else {
             alert("新增失敗：" + result.Message);
+            createUserBtn.disabled = false;
         }
     } catch (error) {
         console.error("請求失敗", error);
         alert("發生錯誤，請稍後再試。");
     }
+
 }
