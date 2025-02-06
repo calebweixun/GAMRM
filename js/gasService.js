@@ -70,12 +70,12 @@ function searchUserData(event) {
     document.getElementById("dataContainer").style.display = "none";
 
     if (event === "qrshow") {
-        document.getElementById("loading-text").innerText = "正在查詢資料並產生QR Code...";
+        confirmButtonbtn.value = "正在查詢資料並產生QR Code...";
     } else if (event === "edit") {
-        document.getElementById("loading-text").innerText = "正在查詢資料...";
+        confirmButtonbtn.value = "正在查詢資料...";
     }
 
-    document.getElementById("loading").style.display = "flex";
+    // document.getElementById("loading").style.display = "flex";
     document.body.style.cursor = "wait";
 
 
@@ -93,25 +93,28 @@ function searchUserData(event) {
         .then((response) => response.json())
         .then((data) => {
             console.log("Success:", data);
+
+            confirmButtonbtn.value = "確認";
+            confirmButtonbtn.disabled = false;
+
             document.body.style.cursor = "default";
             if (event === "edit") {
-                displayData(data);
-                document.getElementById("loading").style.display = "none";
 
+                displayData(data);
+                // document.getElementById("loading").style.display = "none";
             } else if (event === "qrshow") {
                 qrShow(data);
-                document.getElementById("loading").style.display = "none";
+                // document.getElementById("loading").style.display = "none";
 
             }
         })
         .catch((error) => {
             console.error("Error:", error)
-            document.getElementById("loading").style.display = "none";
+            // document.getElementById("loading").style.display = "none";
             alert("連線時發生錯誤，請稍後再試！");
         }
 
         );
-    onfirmButtonbtn.disabled = false;
 }
 
 function displayData(data) {
@@ -227,8 +230,8 @@ function updateUserData() {
     var lineId = document.getElementById("lineId").value;
     var guild = document.getElementById("guild").value;
 
-    const confirmButtonbtn = document.getElementById("updateUser");
-    confirmButtonbtn.disabled = true;
+    const updateUserbtn = document.getElementById("updateUser");
+    updateUserbtn.disabled = true;
 
     // 檢查必填欄位
     if (!name || !nickname || !phone || !lineId || !guild) {
@@ -260,6 +263,7 @@ function updateUserData() {
             return response.json();
         })
         .then((data) => {
+            updateUserbtn.disabled = false;
             console.log("Success:", data.Status);
             if (data.Status === "OK") {
                 alert("資料已更新！");
@@ -269,11 +273,12 @@ function updateUserData() {
             }
         })
         .catch((error) => {
+            updateUserbtn.disabled = false;
             console.error("Error:", error);
             alert("發生錯誤，請稍後再試！");
         });
 
-    confirmButtonbtn.disabled = false;
+
 }
 
 /**
@@ -294,9 +299,10 @@ async function isEmailDuplicate() {
     }
 
     // 顯示加載提示
-    loading.style.display = "flex";
+    // loading.style.display = "flex";
     dataContainer.style.display = "none";
     confirmButtonbtn.disabled = true;
+    confirmButtonbtn.value = "正在查詢資料...";
 
     try {
         // 發送請求到 Apps Script
@@ -348,8 +354,11 @@ async function isEmailDuplicate() {
         console.error("請求失敗", error);
         alert("發生錯誤，請稍後再試。");
     } finally {
-        loading.style.display = "none";
+        // loading.style.display = "none";
+        confirmButtonbtn.disabled = false;
+        confirmButtonbtn.value = "確認";
     }
+
 }
 
 /**
