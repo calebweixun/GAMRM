@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
-    <base href="/GAMRM/" />
+    <base href="/" />
     <!-- This is the base URL for the relative path -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.png" type="image/png" />
-    <title>GAMRM:週四實體聚會簽到系統</title>
+    <title>Global Act 資訊入口</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/userQRScan.css" />
@@ -23,18 +23,12 @@
       </div>
     </header>
     <div class="container">
-      <button
-        class="button"
-        onclick="location.href='verifyQRScan'"
-        style="background-color: #dc8533"
-      >
-        <i class="material-icons">barcode_reader</i> 招待組簽到掃描
-      </button>
+      <h2>💁🏻‍♂️ GA人這邊請</h2>
       <button class="button" onclick="location.href='userQRshow'">
         <i class="material-icons">qr_code</i> 個人簽到用QR顯示
       </button>
       <button class="button" onclick="location.href='userProfileEdit'">
-        <i class="material-icons">person</i> 個人資料維護
+        <i class="material-icons">person</i> 個人資料修改/維護
       </button>
       <button
         class="button"
@@ -42,14 +36,28 @@
       >
         <i class="material-icons">bolt</i> GA Action 行動達成回報
       </button>
+    </div>
+    <div class="container">
+      <h2>🙋🏻‍♂️ 新朋友來這邊</h2>
       <button
         class="button"
         onclick="location.href='userCreate'"
         style="background-color: #3377dc"
       >
-        <i class="material-icons">person_add</i> 新朋友加入
+        <i class="material-icons">person_add</i> 註冊加入GA
       </button>
     </div>
+    <div class="container">
+      <h2>🧑🏻‍💻 工作人員專用</h2>
+      <button
+        class="button"
+        onclick="loc🙋‍♀️ation.href='verifyQRScan'"
+        style="background-color: #dc8533"
+      >
+        <i class="material-icons">barcode_reader</i> 招待組簽到掃描
+      </button>
+    </div>
+
     <footer>
       <br />
       <div class="copyright">
