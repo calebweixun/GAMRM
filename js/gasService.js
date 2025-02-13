@@ -369,6 +369,7 @@ async function isEmailDuplicate() {
  *  userCreate.html
  */
 async function createUserData() {
+    const data = {};
     const emailElem = document.getElementById("email");
     const nameElem = document.getElementById("name");
     const nicknameElem = document.getElementById("nickname");
