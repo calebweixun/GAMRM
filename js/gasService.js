@@ -427,7 +427,17 @@ async function createUserData() {
 
             createUserBtn.value = "已註冊完成";
 
-            searchUserData("qrshow");
+            // searchUserData("qrshow");
+
+            data.GAID = result.GAID;
+            data.Name = name;
+            data.NickName = nickname;
+            data.Role = "訪客";
+            data.Guild = guild;
+            data.signInCount = 0;
+
+            qrShow(data);
+
             document.getElementById("confirmButton").disabled = false;
         } else {
             alert("新增失敗：" + result.Message);

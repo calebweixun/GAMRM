@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>影像裁切工具</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/userQRScan.css" />
+    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
+    />
+    <style>
+      .upload-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        background: #efefef;
+        position: relative;
+      }
+      #fileInput {
+        display: none;
+      }
+      .action-buttons {
+        margin: 10px 8% 10px 8%;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      button {
+        padding: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      #uploadButton {
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+      .cropper-container {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
+      @media (max-width: 600px) {
+        .cropper-container {
+          max-width: 100%;
+        }
+        button {
+          min-width: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="img/logo.png" alt="logo" />
+        </a>
+      </div>
+    </header>
+    <div class="container">
+      <button id="uploadButton">選擇照片並進行裁切</button>
+      <input type="file" id="fileInput" accept="image/*" />
+
+      <div class="cropper-container">
+        <img id="image" style="max-width: 100%; display: none" />
+      </div>
+
+      <div class="action-buttons">
+        <button id="resetButton" style="display: none">重設圖片</button>
+        <button
+          id="clearButton"
+          style="display: none; background-color: #f44336"
+        >
+          清除畫面
+        </button>
+        <button
+          id="cropButton"
+          style="display: none; background-color: #45a049"
+        >
+          裁切並下載
+        </button>
+      </div>
+    </div>
+    <footer>
+      <br />
+      <div class="copyright">
+        <p>Page build by 2025 GA資訊組</p>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+      let cropper;
+      const fileInput = document.getElementById("fileInput");
+      const uploadButton = document.getElementById("uploadButton");
+      const image = document.getElementById("image");
+      const cropButton = document.getElementById("cropButton");
+      const resetButton = document.getElementById("resetButton");
+      const clearButton = document.getElementById("clearButton");
+
+      uploadButton.addEventListener("click", function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            image.src = e.target.result;
+            image.style.display = "block";
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(image, {
+              aspectRatio: 1,
+              viewMode: 1,
+            });
+            cropButton.style.display = "block";
+            resetButton.style.display = "block";
+            clearButton.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      cropButton.addEventListener("click", function () {
+        const canvas = cropper.getCroppedCanvas();
+        if (!canvas) {
+          alert("裁切失敗！");
+          return;
+        }
+        canvas.toBlob((blob) => {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "cropped-image.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }, "image/png");
+      });
+
+      resetButton.addEventListener("click", function () {
+        if (cropper) {
+          cropper.reset();
+        }
+      });
+
+      clearButton.addEventListener("click", function () {
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+        image.style.display = "none";
+        cropButton.style.display = "none";
+        resetButton.style.display = "none";
+        clearButton.style.display = "none";
+        fileInput.value = "";
+      });
+    </script>
+  </body>
+</html>

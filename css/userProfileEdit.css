@@ -42,7 +42,8 @@ h2 {
 input[type="text"],
 input[type="button"],
 input[type="number"],
-input[type="password"] {
+input[type="password"],
+input[type="file"] {
   padding: 12px;
   /* margin-top: 20px; */
   width: 70%;
@@ -55,7 +56,8 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="number"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="file"]:focus {
   outline: none;
   border-color: #66afe9;
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
@@ -156,14 +158,16 @@ div#dataContainer {
   cursor: not-allowed;
 }
 
-input[type="button"] {
+input[type="button"],
+input[type="file"] {
   background-color: #4caf50;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
 
-input[type="button"]:hover {
+input[type="button"]:hover,
+input[type="file"]:hover {
   background-color: #45a049;
 }
 
