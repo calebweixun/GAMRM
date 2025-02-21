@@ -204,13 +204,13 @@ function qrShow(data) {
     container.innerHTML = `
       <div class="data-container" style="display: flex">
         <h3>歡迎回到GA</h3>
-        <h3>請以此QR給招待組進行簽到</h3>
+        <h3>請以此QRCode進行報到</h3>
         <div class="qr-area">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
         <h2>${data.Name || ""}  ${data.NickName || ""}</h2>
         <p>${data.Role || ""}@${data.Guild || ""}</p>
-        <p>本季度簽到次數:${data.signInCount || "0"}</p>
+        <p>本季度報到次數:${data.signInCount || "0"}</p>
       </div>
         `;
 
@@ -299,7 +299,7 @@ function updateUserData() {
 async function isEmailDuplicate() {
     const email = document.getElementById("email").value.trim();
     const loading = document.getElementById("loading");
-    const dataContainer = document.getEl ementById("dataContainer");
+    const dataContainer = document.getElementById("dataContainer");
     const confirmButtonbtn = document.getElementById("confirmButton");
 
     if (!email.match(/^\w+@\w+\.\w+$/i)) {
@@ -356,6 +356,7 @@ async function isEmailDuplicate() {
                 </div>
                     <input id="createUser" type="button" value="加入GA" onclick="createUserData()" />
                 </div>`;
+            document.getElementById("email").disabled = true;
         } else {
             alert("此 Email 已經存在，無法重複建立使用者。");
         }
@@ -461,6 +462,7 @@ async function createUserData() {
             qrShow(data);
 
             document.getElementById("confirmButton").disabled = false;
+            document.getElementById("email").disabled = false;
         } else {
             alert("新增失敗：" + result.Message);
             createUserBtn.disabled = false;
