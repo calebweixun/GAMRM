@@ -233,9 +233,16 @@ function updateUserData() {
     const updateUserbtn = document.getElementById("updateUser");
     updateUserbtn.disabled = true;
 
+    const taiwanMobileRegex = /^09[1-9]\d{7}$/;
+
+    if (!taiwanMobileRegex.test(phone)) {
+        alert("請輸入正確的手機號碼！");
+        return;
+    }
+
     // 檢查必填欄位
-    if (!name || !nickname || !phone || !lineId || !guild) {
-        alert("請填寫所有欄位！");
+    if (!name || !nickname || !phone || !lineId) {
+        alert("請完成所有欄位！");
         return;
     }
 
@@ -293,8 +300,8 @@ async function isEmailDuplicate() {
     const dataContainer = document.getElementById("dataContainer");
     const confirmButtonbtn = document.getElementById("confirmButton");
 
-    if (!email) {
-        alert("請輸入有效的 Email");
+    if (!email.match(/^\w+@\w+\.\w+$/i)) {
+        alert('請輸入有效的 Email')
         return;
     }
 
@@ -336,7 +343,7 @@ async function isEmailDuplicate() {
                 <div class="input-area">
                     <label for="guild">欲加入公會</label>
                     <select id="guild">
-                    <option value="">請選擇</option>
+                    <option value="">請選擇/尚未決定</option>
                     <option value="陌開公會">陌開</option>
                     <option value="文案公會">文案</option>
                     <option value="攝影公會">攝影</option>
@@ -385,12 +392,19 @@ async function createUserData() {
     const lineId = lineIdElem.value.trim();
     const guild = guildElem.value;
 
-    createUserBtn.disabled = true;
+    const taiwanMobileRegex = /^09[1-9]\d{7}$/;
 
-    if (!email || !name || !nickname || !phone || !lineId || !guild) {
+    if (!taiwanMobileRegex.test(phone)) {
+        alert("請輸入正確的手機號碼！");
+        return;
+    }
+
+    if (!email || !name || !nickname || !phone || !lineId) {
         alert("請填寫完整的資料！");
         return;
     }
+
+    createUserBtn.disabled = true;
 
     console.log(`${url}?action=createUser&email=${encodeURIComponent(
         email
@@ -415,7 +429,7 @@ async function createUserData() {
             }
         );
         const result = await response.json();
-
+        console.log(result);
         if (result.Status === "Success") {
             alert("使用者資料新增成功！");
 
@@ -430,6 +444,11 @@ async function createUserData() {
 
             // searchUserData("qrshow");
 
+            if (result.GAID === undefined) {
+                alert("GAID 未取得，無法產生QR Code，請洽GA招待組人員");
+                createUserBtn.disabled = false;
+                return;
+            }
             data.GAID = result.GAID;
             data.Name = name;
             data.NickName = nickname;

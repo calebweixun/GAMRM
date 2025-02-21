@@ -58,18 +58,8 @@ document
 
     console.log("signin", data);
 
-    let outputName = "";
-
-    if (data.NickName) {
-      outputName = data.NickName;
-    } else if (data.Name) {
-      outputName = data.Name;
-    } else {
-      outputName = "";
-    }
-
     var rigesterurl =
-      `https://docs.google.com/forms/d/e/1FAIpQLSdKJEWd-SzMd542oHoftmsfrUfFBL0RBeLcga62Ztymo9soGQ/viewform?usp=pp_url&entry.672401115=%E9%80%B1%E5%9B%9B%E5%AF%A6%E9%AB%94%E8%81%9A%E9%9B%86&entry.346019688=${data.GAID}&entry.752342505=${outputName}`;
+      `https://docs.google.com/forms/d/e/1FAIpQLSdKJEWd-SzMd542oHoftmsfrUfFBL0RBeLcga62Ztymo9soGQ/viewform?usp=pp_url&entry.672401115=%E9%80%B1%E5%9B%9B%E5%AF%A6%E9%AB%94%E8%81%9A%E9%9B%86&entry.346019688=${data.GAID}`;
 
     window.open(`${rigesterurl}`, "_blank");
     // 關閉彈出視窗並清除結果
