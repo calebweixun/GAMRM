@@ -62,8 +62,9 @@ function searchUserData(event) {
     confirmButtonbtn.disabled = true;
     console.log(email);
     console.log(event);
-    if (!email) {
-        alert("尚未輸入 Email！");
+
+    if (!email.match(/^\w+@\w+\.\w+$/i)) {
+        alert('請輸入有效的 Email')
         return;
     }
 
