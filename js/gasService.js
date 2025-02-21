@@ -59,7 +59,6 @@ async function qrSignIn(gaid) {
 function searchUserData(event) {
     var email = document.getElementById("email").value;
     const confirmButtonbtn = document.getElementById("confirmButton");
-    confirmButtonbtn.disabled = true;
     console.log(email);
     console.log(event);
 
@@ -67,6 +66,8 @@ function searchUserData(event) {
         alert('請輸入有效的 Email')
         return;
     }
+    confirmButtonbtn.disabled = true;
+
 
     document.getElementById("dataContainer").style.display = "none";
 
@@ -298,7 +299,7 @@ function updateUserData() {
 async function isEmailDuplicate() {
     const email = document.getElementById("email").value.trim();
     const loading = document.getElementById("loading");
-    const dataContainer = document.getElementById("dataContainer");
+    const dataContainer = document.getEl ementById("dataContainer");
     const confirmButtonbtn = document.getElementById("confirmButton");
 
     if (!email.match(/^\w+@\w+\.\w+$/i)) {
