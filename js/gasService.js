@@ -208,6 +208,7 @@ function qrShow(data) {
         <div class="qr-area">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
+        <h3 style="color: #F2BD11; font-weight: bold; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000;">${data.GAID}</h3>
         <h2>${data.Name || ""}  ${data.NickName || ""}</h2>
         <p>${data.Role || ""}@${data.Guild || ""}</p>
         <p>本季度報到次數:${data.signInCount || "0"}</p>
