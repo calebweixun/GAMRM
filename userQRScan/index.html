@@ -22,8 +22,22 @@
       </div>
     </header>
 
+    <!-- 密碼驗證區塊 -->
+    <div class="container" id="verify-container">
+      <div class="form-container">
+        <label for="password">請輸入招待人員用密碼</label>
+        <input type="password" id="password" placeholder="請輸入密碼" />
+        <input
+          type="button"
+          id="verifyBtn"
+          value="驗證"
+          onclick="verifycode()"
+        />
+      </div>
+    </div>
+
     <!-- QR Code Scanner -->
-    <div id="qr-reader"></div>
+    <div id="qr-reader" style="display: none"></div>
 
     <!-- 彈出式視窗 -->
     <div id="popup-window" class="popup-window">
@@ -55,5 +69,6 @@
     </footer>
     <script src="js/gasService.js"></script>
     <script src="js/qrScanAction.js"></script>
+    <script src="js/verify.js"></script>
   </body>
 </html>

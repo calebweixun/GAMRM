@@ -6,8 +6,13 @@ function verifycode() {
 
   // 比對密碼是否正確
   if (inputPassword === validPassword) {
-    // 密碼正確，跳轉到掃描器頁面
-    window.location.href = "userQRScan"; // 請依實際路徑修改
+    // 密碼正確，顯示掃描器並隱藏驗證區塊
+    document.getElementById("verify-container").style.display = "none";
+    document.getElementById("qr-reader").style.display = "block";
+    // 初始化掃描器
+    if (typeof initializeScanner === "function") {
+      initializeScanner();
+    }
   } else {
     // 密碼錯誤，顯示警告訊息
     alert("密碼錯誤，拒絕存取！");
