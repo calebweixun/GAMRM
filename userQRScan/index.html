@@ -9,50 +9,8 @@
     <title>GA週四實體聚會簽到系統</title>
     <script src="js/html5-qrcode.min.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/variables.css" />
-    <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/userQRScan.css" />
     <link rel="stylesheet" href="css/userProfileEdit.css" />
-    <style>
-      .auth-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 60vh;
-        padding: 20px;
-      }
-      .auth-form {
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 400px;
-      }
-      .auth-form input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-      .auth-form button {
-        width: 100%;
-        padding: 10px;
-        background-color: #dc8533;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      .auth-form button:hover {
-        background-color: #c67422;
-      }
-      #qr-section {
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <!-- Logo -->
@@ -64,38 +22,21 @@
       </div>
     </header>
 
-    <!-- 驗證表單 -->
-    <div id="auth-section" class="auth-container">
-      <div class="card">
-        <h2>招待組人員驗證</h2>
-        <label for="password">請輸入招待人員用密碼</label>
-        <input
-          type="password"
-          id="password"
-          class="input"
-          placeholder="請輸入密碼"
-        />
-        <button onclick="verifycode()" class="btn btn-primary">驗證</button>
-      </div>
-    </div>
-
     <!-- QR Code Scanner -->
-    <div id="qr-section">
-      <div id="qr-reader"></div>
-    </div>
+    <div id="qr-reader"></div>
 
     <!-- 彈出式視窗 -->
-    <div id="popup-window" class="popup">
+    <div id="popup-window" class="popup-window">
       <div class="popup-content">
         <h2>簽到資料</h2>
-        <div id="loading" class="loading">
+        <div id="loading">
           <h2 id="loading-text">正在確認資料，請稍候...</h2>
         </div>
         <div id="query-result"></div>
 
-        <div class="action-buttons">
-          <button id="cancel-btn" class="btn btn-secondary">取消</button>
-          <button id="check-in-btn" class="btn btn-primary">簽到</button>
+        <div class="action-buttons" id="action-buttons">
+          <button id="cancel-btn">取消</button>
+          <button id="check-in-btn">簽到</button>
         </div>
       </div>
     </div>
@@ -112,7 +53,6 @@
         <p>Page build by 2025 GA資訊組</p>
       </div>
     </footer>
-    <script src="js/verify.js"></script>
     <script src="js/gasService.js"></script>
     <script src="js/qrScanAction.js"></script>
   </body>

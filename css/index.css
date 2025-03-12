@@ -1,18 +1,11 @@
 .container {
-  padding: var(--spacing-md);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
+  gap: 10px;
 }
-
-.container h2 {
-  font-size: var(--font-size-lg);
-  color: var(--text-color);
-  margin-bottom: var(--spacing-sm);
-}
-
 .button {
   display: flex;
   align-items: center;
@@ -29,84 +22,9 @@
   transition: background 0.3s;
   line-height: 1.5;
 }
-
 .button:hover {
   background-color: #45a049;
 }
-
 .button i {
   margin-right: 10px;
-}
-
-/* 擴展按鈕樣式 */
-.btn-success {
-  background-color: var(--secondary-color);
-  color: var(--white);
-}
-
-.btn-success:hover {
-  background-color: var(--success-color);
-}
-
-.btn-warning {
-  background-color: var(--primary-color);
-  color: var(--white);
-}
-
-.btn-warning:hover {
-  opacity: 0.9;
-}
-
-/* 按鈕內的圖標樣式 */
-.btn i {
-  margin-right: var(--spacing-sm);
-}
-
-/* Logo 樣式 */
-.logo {
-  max-width: 150px;
-  margin: var(--spacing-md) auto;
-  text-align: center;
-}
-
-.logo img {
-  width: 100%;
-  height: auto;
-}
-
-/* 頁尾樣式 */
-footer {
-  margin-top: var(--spacing-lg);
-  text-align: center;
-}
-
-.copyright {
-  font-size: var(--font-size-xs);
-  color: var(--text-light);
-}
-
-/* 響應式設計 */
-@media screen and (max-width: 768px) {
-  .container {
-    padding: var(--spacing-sm);
-  }
-
-  .btn {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .container h2 {
-    font-size: var(--font-size-md);
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .logo {
-    max-width: 120px;
-  }
-
-  .btn {
-    font-size: var(--font-size-sm);
-  }
 }

@@ -9,8 +9,7 @@
 
     <title>GA使用者資料更新介面</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/variables.css" />
-    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/userQRScan.css" />
     <link rel="stylesheet" href="css/userProfileEdit.css" />
   </head>
   <body>
@@ -23,36 +22,25 @@
     </header>
     <div class="container">
       <!-- Email 搜尋表單 -->
-      <div class="card">
-        <h2>GA使用者資料查詢/更新</h2>
-        <div class="form-group">
-          <label for="email">請輸入Email進行查詢</label>
-          <input
-            type="text"
-            id="email"
-            class="input"
-            placeholder="請輸入Email"
-          />
-          <button
-            onclick="searchUserData('edit')"
-            id="confirmButton"
-            class="btn btn-primary"
-          >
-            搜尋
-          </button>
-        </div>
+      <div class="form-container">
+        <label for="email">GA使用者資料查詢/更新</label>
+        <input type="text" id="email" placeholder="請輸入Email進行查詢" />
+        <input
+          type="button"
+          value="搜尋"
+          onclick="searchUserData('edit')"
+          id="confirmButton"
+        />
       </div>
 
       <!-- 查詢加載提示 -->
-      <div id="loading" class="loading">
-        <h2 id="loading-text">正在取得資料，請稍候...</h2>
-      </div>
+      <div id="loading"><h2 id="loading-text">正在取得資料，請稍候...</h2></div>
 
       <!-- 顯示資料區域 -->
-      <div id="dataContainer" class="data-container"></div>
+      <div id="dataContainer"></div>
     </div>
     <footer>
-      <p class="hint-text">此頁面提供GA人進行個人資料維護</p>
+      <p>此頁面提供GA人進行個人資料維護</p>
       <br />
       <div class="copyright">
         <p>Page build by 2025 GA資訊組</p>
