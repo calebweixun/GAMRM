@@ -36,9 +36,6 @@ function startScanner() {
     });
 }
 
-// 網頁載入時啟動掃描器
-window.onload = startScanner;
-
 // 取消按鈕功能
 document
   .getElementById("cancel-btn")
@@ -55,7 +52,6 @@ document
 document
   .getElementById("check-in-btn")
   .addEventListener("click", function () {
-
     console.log("signin", data);
 
     var rigesterurl =

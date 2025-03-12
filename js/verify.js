@@ -15,9 +15,7 @@ function verifycode() {
     document.getElementById("scan-message").style.display = "block";
 
     // 初始化掃描器
-    if (typeof initializeScanner === "function") {
-      initializeScanner();
-    }
+    startScanner();
   } else {
     // 密碼錯誤，顯示警告訊息
     alert("密碼錯誤，拒絕存取！");
