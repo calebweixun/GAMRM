@@ -9,8 +9,9 @@
 
     <title>GA使用者QR顯示</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/userQRScan.css" />
-    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/userQRshow.css" />
   </head>
   <body>
     <header>
@@ -22,24 +23,33 @@
     </header>
     <div class="container">
       <!-- Email 搜尋表單 -->
-      <div class="form-container">
-        <label for="email">GA使用者QR產生器</label>
-        <input type="text" id="email" placeholder="請輸入個人Email進行查詢" />
-        <input
-          type="button"
-          value="確認"
-          onclick="searchUserData('qrshow')"
-          id="confirmButton"
-        />
+      <div class="card">
+        <h2>GA使用者QR產生器</h2>
+        <div class="form-group">
+          <label for="email">請輸入個人Email進行查詢</label>
+          <input
+            type="text"
+            id="email"
+            class="input"
+            placeholder="請輸入Email"
+          />
+          <button
+            onclick="searchUserData('qrshow')"
+            id="confirmButton"
+            class="btn btn-primary"
+          >
+            確認
+          </button>
+        </div>
       </div>
 
       <!-- 查詢加載提示 -->
-      <div id="loading">
+      <div id="loading" class="loading">
         <h2 id="loading-text">正在確認email，請稍候...</h2>
       </div>
 
       <!-- 顯示資料區域 -->
-      <div id="dataContainer"></div>
+      <div id="dataContainer" class="data-container"></div>
     </div>
     <footer>
       <br />

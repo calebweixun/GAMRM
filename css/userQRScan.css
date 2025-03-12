@@ -1,122 +1,96 @@
-/* Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+@import "variables.css";
+@import "components.css";
 
-/* 全域 */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-img {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-h1 {
-  font-size: 32px;
-  font-weight: bolder;
-  width: 100%;
-}
-
-h2 {
-  font-size: 24px;
-  font-weight: bolder;
-  text-align: center;
-  line-height: 1.2;
-}
-
+/* 全域樣式 */
 body {
-  font-family: "Noto Sans", sans-serif;
+  font-family: var(--font-family);
   line-height: 1.5;
-  font-size: 24px;
+  font-size: var(--font-size-md);
   margin: 0 auto;
   padding: 0;
-  background-color: #ffe2e2;
+  background-color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: auto;
   flex-direction: column;
   text-align: center;
 }
 
+/* 頁面標題 */
+h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  width: 100%;
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Logo 區域 */
 header {
   max-width: 100%;
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--spacing-sm) 0;
 }
 
 .logo {
   max-width: 150px;
-  margin: 20px 0 10px 0;
+  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
 }
 
-.copyright {
-  font-size: 10px;
-  color: #666;
-  margin-top: 10px;
-  text-align: center;
-}
-
+/* QR 掃描器 */
 #qr-reader {
   width: 80%;
   height: auto;
-  margin: 20px auto;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  margin: var(--spacing-md) auto;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
   position: relative;
-  overflow: hidden; /* 確保相機畫面不會超出圓角範圍 */
+  overflow: hidden;
 }
 
+/* 結果顯示 */
 #result {
-  background-color: #fff;
-  padding: 10px;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-  color: #333;
+  background-color: var(--white);
+  padding: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-md);
+  color: var(--text-color);
   display: none;
 }
 
-footer {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #666;
-}
-
-/* 彈出式視窗樣式 */
-/* 彈出視窗樣式 */
+/* 彈出視窗 */
 .popup-window {
-  display: none; /* 初始隱藏 */
+  display: none;
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.9); /* 初始縮小 */
+  transform: translate(-50%, -50%) scale(0.9);
   width: 80%;
-  max-width: 500px;
+  max-width: var(--container-width-sm);
   height: 60%;
-  background-color: #fff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: var(--white);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
   text-align: center;
-  z-index: 1000; /* 確保彈出視窗在最上層 */
+  z-index: var(--z-index-modal);
   opacity: 0;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
 }
 
 .popup-window.visible {
   display: block;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1); /* 彈出視窗顯示並恢復原始大小 */
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .popup-content {
@@ -128,37 +102,65 @@ footer {
   overflow: hidden;
 }
 
-/* 查詢結果樣式 */
+/* 查詢結果 */
 #query-result p {
-  word-wrap: break-word; /* 強制長字串換行 */
-  white-space: normal; /* 防止文字過長不換行 */
-  max-width: 100%; /* 確保不超過彈出視窗的寬度 */
-  overflow: auto; /* 如果文字超過可見區域會顯示滾動條 */
-  padding: 10px 0; /* 給文字一點上下邊距 */
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+  overflow: auto;
+  padding: var(--spacing-sm) 0;
 }
 
+/* 按鈕區域 */
 .action-buttons {
   max-width: 100%;
-  margin-top: 20px;
+  margin-top: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
 }
 
-button {
-  padding: 15px 35px;
-  margin: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
+/* 頁尾 */
+footer {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
 }
 
-#cancel-btn {
-  background-color: #ffffff;
-  color: #007bff;
-  border: #333 1px solid;
+.copyright {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  margin-top: var(--spacing-sm);
+  text-align: center;
 }
 
-button:hover {
-  background-color: #0056b3;
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: var(--spacing-sm);
+  }
+
+  h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  h2 {
+    font-size: var(--font-size-md);
+  }
+
+  #qr-reader {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .popup-window {
+    width: 95%;
+    height: 70%;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
 }

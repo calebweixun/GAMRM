@@ -1,0 +1,88 @@
+/* 全域樣式 */
+body {
+  font-family: var(--font-family);
+  line-height: 1.5;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* QR碼容器 */
+.qr-container {
+  background-color: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  margin: var(--spacing-md) auto;
+  max-width: 300px;
+  text-align: center;
+}
+
+.qr-container img {
+  width: 100%;
+  height: auto;
+  margin: var(--spacing-sm) 0;
+}
+
+/* 用戶資訊 */
+.user-info {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md);
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-info h3 {
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-color);
+}
+
+.user-info p {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  margin: var(--spacing-xs) 0;
+}
+
+/* 表單組件 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  font-size: var(--font-size-md);
+  color: var(--text-color);
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  .qr-container {
+    max-width: 250px;
+  }
+
+  .user-info {
+    padding: var(--spacing-sm);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .qr-container {
+    max-width: 200px;
+  }
+
+  .user-info h3 {
+    font-size: var(--font-size-sm);
+  }
+
+  .user-info p {
+    font-size: var(--font-size-xs);
+  }
+}

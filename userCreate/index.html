@@ -8,8 +8,9 @@
     <link rel="icon" href="img/favicon.png" type="image/png" />
     <title>GA使用者資料建立介面</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/userQRScan.css" />
-    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/userCreate.css" />
   </head>
   <body>
     <header>
@@ -21,38 +22,36 @@
     </header>
     <div class="container">
       <!-- Email 搜尋表單 -->
-      <div class="form-container">
-        <label for="email">GA使用者資料資料建立</label>
-        <input type="text" id="email" placeholder="請輸入個人Email進行建檔" />
-        <input
-          type="button"
-          value="確認"
-          onclick="isEmailDuplicate()"
-          id="confirmButton"
-        />
+      <div class="card">
+        <h2>GA使用者資料建立</h2>
+        <div class="form-group">
+          <label for="email">請輸入個人Email進行建檔</label>
+          <input
+            type="text"
+            id="email"
+            class="input"
+            placeholder="請輸入Email"
+          />
+          <button
+            onclick="isEmailDuplicate()"
+            id="confirmButton"
+            class="btn btn-primary"
+          >
+            確認
+          </button>
+        </div>
       </div>
 
       <!-- 查詢加載提示 -->
-      <div id="loading">
+      <div id="loading" class="loading">
         <h2 id="loading-text">正在確認email，請稍候...</h2>
       </div>
 
       <!-- 顯示資料區域 -->
-      <div id="dataContainer"></div>
-      <p
-        style="
-          font-size: 80%;
-          margin-top: 10px;
-          margin-bottom: 20px;
-          color: #666;
-          font-style: italic;
-        "
-      >
-        請在建立個人資料後，向招待組出示QR Code進行報到
-      </p>
+      <div id="dataContainer" class="data-container"></div>
+      <p class="hint-text">請在建立個人資料後，向招待組出示QR Code進行報到</p>
     </div>
     <footer>
-      <br />
       <div class="copyright">
         <p>Page build by 2025 GA資訊組</p>
       </div>

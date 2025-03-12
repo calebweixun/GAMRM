@@ -8,6 +8,8 @@
     <link rel="icon" href="img/favicon.png" type="image/png" />
     <title>Global Act 資訊入口</title>
     <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/userQRScan.css" />
     <link rel="stylesheet" href="css/userProfileEdit.css" />
@@ -24,20 +26,20 @@
     </header>
     <div class="container">
       <h2>💁🏻‍♂️💁🏻‍♀️ GA人這邊請</h2>
-      <button class="button" onclick="location.href='userQRshow'">
+      <button class="btn btn-primary" onclick="location.href='userQRshow'">
         <i class="material-icons">qr_code</i> 個人簽到用QR顯示
       </button>
-      <button class="button" onclick="location.href='userProfileEdit'">
+      <button class="btn btn-primary" onclick="location.href='userProfileEdit'">
         <i class="material-icons">person</i> 個人資料修改/維護
       </button>
       <button
-        class="button"
+        class="btn btn-primary"
         onclick="window.open('https://forms.gle/aRtUcPmF3ATxUxiv6', '_blank')"
       >
         <i class="material-icons">add_a_photo</i> 個人大頭貼上傳
       </button>
       <button
-        class="button"
+        class="btn btn-primary"
         onclick="window.open('https://forms.gle/EhGUK7k457kHPVtUA', '_blank')"
       >
         <i class="material-icons">bolt</i> GA Action 行動達成回報
@@ -45,27 +47,21 @@
     </div>
     <div class="container">
       <h2>🙋🏻‍♂️ 新朋友來這邊 🙋🏻‍♀️</h2>
-      <button
-        class="button"
-        onclick="location.href='userCreate'"
-        style="background-color: #3377dc"
-      >
+      <button class="btn btn-secondary" onclick="location.href='userCreate'">
         <i class="material-icons">person_add</i> 註冊加入GA
       </button>
     </div>
     <div class="container">
       <h2>🙆🏻‍♀️ 加入LINE群組 🙆🏻‍♂️</h2>
       <button
-        class="button"
+        class="btn btn-success"
         onclick="window.open('https://line.me/ti/g/JY8QzwVwkT', '_blank')"
-        style="background-color: #229c75"
       >
         <i class="material-icons">group</i> GA行銷實體現場群組
       </button>
       <button
-        class="button"
+        class="btn btn-success"
         onclick="window.open('https://line.me/ti/g/XdEvPyxDKu', '_blank')"
-        style="background-color: #229c75"
       >
         <i class="material-icons">group</i> 行銷不懂就問GA
       </button>
@@ -73,11 +69,7 @@
 
     <div class="container">
       <h2>🧑🏻‍💻 工作人員專用 👩🏻‍💻</h2>
-      <button
-        class="button"
-        onclick="location.href='verifyQRScan'"
-        style="background-color: #dc8533"
-      >
+      <button class="btn btn-warning" onclick="location.href='verifyQRScan'">
         <i class="material-icons">barcode_reader</i> 招待組簽到掃描
       </button>
     </div>
