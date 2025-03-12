@@ -2,9 +2,6 @@
 // Google Apps Script URL
 var url =
     "https://script.google.com/macros/s/AKfycbxjXUF-tnhQHyvJJx4RPEBiymE6SlnZPx6EMDqVnrzUdYi62ROwa46betw0P66ICbT2vA/exec";
-const taiwanMobileRegex = /^09[0-9]\d{7}$/;
-
-
 
 async function qrSignIn(gaid) {
     const signbtn = document.getElementById("action-buttons");
@@ -239,6 +236,7 @@ function updateUserData() {
     const updateUserbtn = document.getElementById("updateUser");
     updateUserbtn.disabled = true;
 
+    const taiwanMobileRegex = /^09[1-9]\d{7}$/;
 
     if (!taiwanMobileRegex.test(phone)) {
         alert("請輸入正確的手機號碼！");
@@ -397,6 +395,8 @@ async function createUserData() {
     const phone = phoneElem.value.trim();
     const lineId = lineIdElem.value.trim();
     const guild = guildElem.value;
+
+    const taiwanMobileRegex = /^09[1-9]\d{7}$/;
 
     if (!taiwanMobileRegex.test(phone)) {
         alert("請輸入正確的手機號碼！");
