@@ -1,4 +1,3 @@
-
 // Google Apps Script URL
 var url =
     "https://script.google.com/macros/s/AKfycbxjXUF-tnhQHyvJJx4RPEBiymE6SlnZPx6EMDqVnrzUdYi62ROwa46betw0P66ICbT2vA/exec";
@@ -32,19 +31,56 @@ async function qrSignIn(gaid) {
         document.getElementById("loading").style.display = "none";
 
         let container = document.getElementById("query-result");
+        // 更新內容顯示
+
+        // 獲取提示訊息
+        const typeMessage = document.getElementById("type-message").textContent;
+
+        // 使用表格顯示用戶資料，標題置中
         container.innerHTML = `
-                <p>${data.Name || ""}</p>
-                <p>${data.NickName || ""}</p>
-                <p>${data.Role || ""}@${data.Guild || ""}</p>
-                <p>本季度簽到次數:${data.signInCount || "0"}</p>
+        <div style="text-align: center; width: 100%;">
+            <table style="width: 100%; border-collapse: collapse; margin: 0 auto 15px auto; max-width: 320px;">
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">姓名：</td>
+                <td style="padding: 5px; text-align: left;">${data.Name || ""}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">暱稱：</td>
+                <td style="padding: 5px; text-align: left;">${data.NickName || ""}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">身分：</td>
+                <td style="padding: 5px; text-align: left;">${data.Role || ""}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">等級：</td>
+                <td style="padding: 5px; text-align: left;">${data.Level || ""}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">公會：</td>
+                <td style="padding: 5px; text-align: left;">${data.Guild || ""}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">本季簽到次數：</td>
+                <td style="padding: 5px; text-align: left;">${data.signInCount || "0"}</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; text-align: right; font-weight: bold;">本季購課剩餘：</td>
+                <td style="padding: 5px; text-align: left;">${data.purchaseRemaining || "0"}</td>
+            </tr>
+            </table>
+            <p style="margin-top: 10px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">${document.getElementById("type-message").textContent}</p>
+
+        </div>
             `;
+
         signbtn.style.display = "block";
 
         return data;
     } catch (error) {
         console.error("Error:", error);
         document.getElementById("loading").style.display = "none";
-        alert("連線時發生錯誤，請稍後再試！");
+        showErrorNotification("連線時發生錯誤，請稍後再試！");
         return null;
     }
 }
@@ -128,7 +164,13 @@ function displayData(data) {
 
     if (data.Status === "Not Found") {
         container.style.display = "flex";
-        container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
+        container.innerHTML = `
+          <div class="data-container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <i class="material-icons" style="font-size: 48px; color: #DC4E33; margin: 20px 0;">error_outline</i>
+            <h2 style="margin-bottom: 10px; font-size: 22px;">找不到相關資料</h2>
+            <p style="margin-bottom: 20px;">請洽GA招待組人員</p>
+          </div>
+        `;
         return;
     }
 
@@ -199,21 +241,76 @@ function qrShow(data) {
     document.getElementById("loading").style.display = "none";
     if (data.Status === "Not Found") {
         container.style.display = "flex";
-        container.innerHTML = "找不到相關資料<br>請洽GA招待組人員";
+        container.innerHTML = `
+          <div class="data-container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <i class="material-icons" style="font-size: 48px; color: #DC4E33; margin: 20px 0;">error_outline</i>
+            <h2 style="margin-bottom: 10px; font-size: 22px;">找不到相關資料</h2>
+            <p style="margin-bottom: 20px;">請洽GA招待組人員</p>
+          </div>
+        `;
         return;
     }
 
     container.innerHTML = `
-      <div class="data-container" style="display: flex">
-        <h3>歡迎回到GA</h3>
-        <h3>請以此QRCode進行報到</h3>
-        <div class="qr-area">
+      <div class="data-container" style="display: flex; gap: 0px;">
+        <h2 style="color: #DC4E33; font-weight: bold; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000; font-size: 32px; margin-top: 5px; margin-bottom: 0px;">${data.GAID}</h2>
+        <h2 style="margin-top: 0; margin-bottom: 5px;">${data.Name || ""}<br\>${data.NickName || ""}</h2>
+        <div class="qr-area" style="margin-bottom: 0;">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
-        <h2 style="color: #cf3d04; font-weight: bold; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px  1px 0 #000,1px  1px 0 #000;">${data.GAID}</h2>
-        <h2>${data.Name || ""}  ${data.NickName || ""}</h2>
-        <p>${data.Role || ""}@${data.Guild || ""}</p>
-        <p>本季度報到次數:${data.signInCount || "0"}</p>
+        <p style="margin: 2px 0;">${data.Role || ""}@${data.Guild || ""}</p>
+        
+        <div style="margin-top: 10px; width: 100%;">
+          <h3 style="margin-bottom: 5px;">本季 GA Action 認列紀錄</h3>
+          <table style="width: 100%; table-layout: fixed; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd; font-size: 14px;">
+            <colgroup>
+              <col style="width: 23%;">
+              <col style="width: 12%;">
+              <col style="width: 65%;">
+            </colgroup>
+            <tr style="background-color: #FFE2E2;">
+              <th style="padding: 6px; text-align: center; border: 1px solid #ddd;">認列項目</th>
+              <th style="padding: 6px; text-align: center; border: 1px solid #ddd;">次數</th>
+              <th style="padding: 6px; text-align: center; border: 1px solid #ddd;">說明</th>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Give</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Give || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">捐贈給非營利組織 1+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Care</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Care || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">與GA成員深度談話 2+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Empower</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Empower || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">邀約GA Day/Line 3+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Do</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Do || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">完成工會/專案/公開任務 4+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Love</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Love || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">探班、關懷、服務 5+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Grow</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Grow || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">出席次數 7+</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Share</td>
+              <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Share || 0}</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">分享筆記、貼文、限動 7+</td>
+            </tr>
+          </table>
+          <p style="margin-top: 5px; font-size: 12px; color: #666; font-style: italic;">※ Action 次數為人工認列，若尚未更新，敬請等候人員處理</p>
+        </div>
       </div>
         `;
 
@@ -433,7 +530,7 @@ async function createUserData() {
         const result = await response.json();
         console.log(result);
         if (result.Status === "Success") {
-            alert("使用者資料新增成功！");
+            // alert("使用者資料新增成功！");
 
             emailElem.disabled = true;
             nameElem.disabled = true;
@@ -449,7 +546,7 @@ async function createUserData() {
             if (result.GAID === undefined) {
                 alert("GAID 未取得，無法產生QR Code，請洽GA招待組人員");
                 createUserBtn.disabled = false;
-                return;
+                return { success: false };
             }
             data.GAID = result.GAID;
             data.Name = name;
@@ -462,13 +559,16 @@ async function createUserData() {
 
             document.getElementById("confirmButton").disabled = false;
             document.getElementById("email").disabled = false;
+
+            return { success: true, data: data };
         } else {
             alert("新增失敗：" + result.Message);
             createUserBtn.disabled = false;
+            return { success: false };
         }
     } catch (error) {
         console.error("請求失敗", error);
         alert("發生錯誤，請稍後再試。");
+        return { success: false };
     }
-
 }

@@ -5,16 +5,16 @@ function doGet(e) {
 
   // 如果是 OPTIONS 請求，直接返回空的回應
   if (e.method == "OPTIONS") {
-    return ContentService.createTextOutput("");
+    return ContentService.createTextOutput('');
   }
 
   // 根據 action 判斷請求的動作
-  if (action === "getUserInfo") {
+  if (action === 'getUserInfo') {
     var userInfo = getUserInfoByEmail(email);
-    return ContentService.createTextOutput(
-      JSON.stringify(userInfo)
-    ).setMimeType(ContentService.MimeType.JSON);
-  } else if (action === "updateUserInfo") {
+    return ContentService.createTextOutput(JSON.stringify(userInfo))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } else if (action === 'updateUserInfo') {
     var name = e.parameter.name;
     var nickname = e.parameter.nickname;
     var phone = e.parameter.phone;
@@ -24,10 +24,10 @@ function doGet(e) {
     // var role = e.parameter.role;
     // var level = e.parameter.level;
     var result = updateUserInfo(email, name, nickname, phone, lineId, guild);
-    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(
-      ContentService.MimeType.JSON
-    );
-  } else if (action === "createUser") {
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } else if (action ==='createUser') {
     var name = e.parameter.name;
     var nickname = e.parameter.nickname;
     var phone = e.parameter.phone;
@@ -35,26 +35,20 @@ function doGet(e) {
     var guild = e.parameter.guild;
 
     var result = createUser(email, name, nickname, phone, lineId, guild);
-    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(
-      ContentService.MimeType.JSON
-    );
-  } else if (action === "qrSignInGet") {
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } else if (action ==='qrSignInGet'){ 
     var gaid = e.parameter.gaid;
     var userInfo = getUserInfoByGAID(gaid);
-    return ContentService.createTextOutput(
-      JSON.stringify(userInfo)
-    ).setMimeType(ContentService.MimeType.JSON);
-  }
+    return ContentService.createTextOutput(JSON.stringify(userInfo))
+      .setMimeType(ContentService.MimeType.JSON);
+  } 
 
   var errorResponse = {
-    status: "error",
-    message: "Invalid action",
+    status: 'error',
+    message: 'Invalid action'
   };
-  return ContentService.createTextOutput(
-    JSON.stringify(errorResponse)
-  ).setMimeType(ContentService.MimeType.JSON);
-}
-
-function test() {
-  console.log(getUserInfoByGAID("GA00003"));
+  return ContentService.createTextOutput(JSON.stringify(errorResponse))
+      .setMimeType(ContentService.MimeType.JSON);
 }

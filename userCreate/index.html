@@ -2,14 +2,19 @@
 <html lang="zh-Hant">
   <head>
     <base href="/GAMRM/" />
+    <!-- <base href="/" /> -->
     <!-- This is the base URL for the relative path -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.png" type="image/png" />
     <title>GA使用者資料建立介面</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/userQRScan.css" />
-    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/features.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
   </head>
   <body>
     <header>
@@ -21,7 +26,7 @@
     </header>
     <div class="container">
       <!-- Email 搜尋表單 -->
-      <div class="form-container">
+      <div class="form-container" id="formContainer">
         <label for="email">GA使用者資料資料建立</label>
         <input type="text" id="email" placeholder="請輸入個人Email進行建檔" />
         <input
@@ -39,24 +44,121 @@
 
       <!-- 顯示資料區域 -->
       <div id="dataContainer"></div>
-      <p
-        style="
-          font-size: 80%;
-          margin-top: 10px;
-          margin-bottom: 20px;
-          color: #666;
-          font-style: italic;
-        "
-      >
-        請在建立個人資料後，向招待組出示QR Code進行報到
-      </p>
+
+      <!-- 成功通知區域 -->
+      <div id="successNotification" class="notification hidden">
+        <div class="notification-icon">
+          <i class="material-icons">check_circle</i>
+        </div>
+        <h2>建檔成功!</h2>
+        <p>請回去向招待組出示QR Code進行報到</p>
+      </div>
+
+      <p class="note">請在建立個人資料後，向招待組出示QR Code進行報到</p>
     </div>
     <footer>
-      <br />
       <div class="copyright">
         <p>Page build by 2025 GA資訊組</p>
       </div>
     </footer>
     <script src="js/gasService.js"></script>
+    <script>
+      // 等待 DOM 和 JS 完全加載
+      document.addEventListener("DOMContentLoaded", function () {
+        // 確保 gasService.js 中的函數已加載
+        setTimeout(function () {
+          // 修改 gasService.js 中的 qrShow 函數以顯示通知
+          // 因為無法直接修改原始檔案，所以我們要複寫它
+          const originalQrShow = window.qrShow;
+
+          window.qrShow = function (data) {
+            console.log("QR顯示觸發，同時顯示通知");
+
+            // 先呼叫原始函數顯示 QR 碼
+            originalQrShow(data);
+
+            // 只有在成功找到或創建用戶資料時才隱藏表單並顯示通知
+            if (data.Status !== "Not Found") {
+              // 隱藏表單
+              document.getElementById("formContainer").style.display = "none";
+
+              // 顯示成功通知
+              showSuccessNotification();
+            } else {
+              // 確保表單在 Not Found 情況下仍然可見
+              document.getElementById("formContainer").style.display = "flex";
+            }
+          };
+
+          // 也修改 createUserData 函數來確保生成 QR 碼後的顯示通知
+          const originalCreateUserData = window.createUserData;
+
+          window.createUserData = async function () {
+            const result = await originalCreateUserData();
+
+            // 只有在成功創建用戶資料時才隱藏表單並顯示通知
+            if (result && result.success) {
+              // 隱藏表單
+              document.getElementById("formContainer").style.display = "none";
+
+              // 顯示成功通知
+              showSuccessNotification();
+            }
+          };
+
+          // 共用的顯示通知函數
+          function showSuccessNotification() {
+            const notification = document.getElementById("successNotification");
+            notification.classList.remove("hidden");
+            notification.classList.add("show");
+
+            // 3秒後淡出通知
+            setTimeout(function () {
+              notification.classList.add("fade-out");
+
+              // 淡出動畫完成後隱藏
+              setTimeout(function () {
+                notification.classList.remove("show");
+                notification.classList.remove("fade-out");
+                notification.classList.add("hidden");
+              }, 1000);
+            }, 3000);
+          }
+
+          console.log("函數已成功覆寫");
+
+          // 額外添加 MutationObserver 以處理可能的 QR 碼顯示
+          const dataContainerObserver = new MutationObserver(function (
+            mutations
+          ) {
+            const dataContainer = document.getElementById("dataContainer");
+            if (
+              dataContainer &&
+              dataContainer.style.display !== "none" &&
+              dataContainer.querySelector("img")
+            ) {
+              // 一旦檢測到條件符合，停止觀察（避免多次觸發）
+              dataContainerObserver.disconnect();
+
+              // 隱藏表單
+              document.getElementById("formContainer").style.display = "none";
+
+              // 顯示成功通知
+              showSuccessNotification();
+            }
+          });
+
+          // 開始觀察資料容器的變化
+          dataContainerObserver.observe(
+            document.getElementById("dataContainer"),
+            {
+              childList: true,
+              subtree: true,
+              attributes: true,
+            }
+          );
+        }, 500); // 給予足夠時間確保 gasService.js 加載完畢
+      });
+    </script>
   </body>
 </html>

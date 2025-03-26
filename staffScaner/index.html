@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <base href="/GAMRM/" />
+    <!-- <base href="/" /> -->
+    <!-- This is the base URL for the relative path -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>GA週四實體聚會簽到系統</title>
+    <script src="js/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/features.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <style>
+      /* 工作人員功能切換頁籤 */
+      #staff-function-tabs {
+        display: none;
+        justify-content: center;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 400px;
+        gap: 5px;
+      }
+
+      .function-tab-button {
+        flex: 1;
+        padding: 10px;
+        background-color: white;
+        color: #3377dc;
+        border: 1px solid #848484;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .function-tab-button.active {
+        background-color: #3377dc;
+        color: white;
+        border-color: #3377dc;
+      }
+
+      .function-tab-button[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .function-tab-button i {
+        margin-bottom: 5px;
+        font-size: 24px;
+      }
+
+      /* 通知樣式 */
+      .notification {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 350px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        padding: 25px 20px;
+        text-align: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out, transform 0.5s ease-in-out;
+      }
+
+      .notification.show {
+        opacity: 1;
+        animation: popIn 0.5s forwards;
+      }
+
+      .notification.fade-out {
+        opacity: 0;
+        animation: fadeOut 1s forwards;
+      }
+
+      .notification-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+      }
+
+      .notification-icon i {
+        font-size: 48px;
+      }
+
+      .notification h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .notification p {
+        font-size: 16px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* 確保qr-reader在顯示時的樣式 */
+      #qr-reader:not(.hidden) {
+        display: block;
+      }
+
+      @keyframes popIn {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+      }
+
+      @media screen and (max-width: 400px) {
+        .function-tab-button {
+          font-size: 12px;
+          padding: 8px 5px;
+        }
+
+        .function-tab-button i {
+          font-size: 20px;
+        }
+      }
+
+      /* QR Scanner 相關樣式，確保在不同設備上顯示正確 */
+      #qr-reader {
+        width: 90% !important;
+        max-width: 400px !important;
+        margin: 20px auto !important;
+        background-color: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      #qr-reader__dashboard {
+        padding: 10px !important;
+      }
+
+      #qr-reader__status {
+        color: #333 !important;
+        font-size: 14px !important;
+      }
+
+      #qr-reader__camera_selection {
+        width: 100% !important;
+        padding: 8px !important;
+        margin-bottom: 10px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 5px !important;
+      }
+
+      #qr-reader__dashboard_section_csr button {
+        background-color: #3377dc !important;
+        color: white !important;
+        border: none !important;
+        padding: 8px 15px !important;
+        border-radius: 5px !important;
+        cursor: pointer !important;
+        margin: 5px !important;
+      }
+
+      #qr-reader__filescan_input {
+        width: 0.1px !important;
+        height: 0.1px !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        z-index: -1 !important;
+      }
+
+      #qr-reader__filescan_input + label {
+        background-color: #3377dc !important;
+        color: white !important;
+        display: inline-block !important;
+        padding: 8px 15px !important;
+        border-radius: 5px !important;
+        cursor: pointer !important;
+        margin: 5px !important;
+      }
+
+      /* 確保在移動設備上有更好的顯示 */
+      @media screen and (max-width: 450px) {
+        #qr-reader {
+          width: 95% !important;
+        }
+
+        #qr-reader__dashboard_section_csr button,
+        #qr-reader__filescan_input + label {
+          padding: 6px 10px !important;
+          font-size: 13px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Logo -->
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="img/logo.png" alt="logo" />
+        </a>
+      </div>
+    </header>
+
+    <!-- 密碼驗證區塊 -->
+    <div class="container" id="verify-container">
+      <div class="form-container">
+        <label for="password">請輸入招待人員用密碼</label>
+        <input type="password" id="password" placeholder="請輸入密碼" />
+        <input
+          type="button"
+          id="verifyBtn"
+          value="驗證"
+          onclick="verify_qrscan()"
+        />
+      </div>
+    </div>
+
+    <!-- 工作人員功能切換頁籤 -->
+    <div id="staff-function-tabs">
+      <button
+        class="function-tab-button active"
+        onclick="switchScanMode('signin')"
+      >
+        <i class="material-icons">barcode_reader</i>
+        簽到
+      </button>
+      <button class="function-tab-button" onclick="switchScanMode('purchase')">
+        <i class="material-icons">shopping_cart</i>
+        購買課程
+      </button>
+    </div>
+
+    <!-- 提示訊息 (隱藏) -->
+    <p id="type-message"></p>
+
+    <!-- QR Code Scanner -->
+    <div id="qr-reader" style="display: none"></div>
+
+    <!-- 彈出式視窗 -->
+    <div id="popup-window" class="popup-window">
+      <div class="popup-content">
+        <h2 id="popup-title">GAID檢核中</h2>
+        <div id="loading">
+          <h2 id="loading-text">正在確認資料，請稍候...</h2>
+        </div>
+        <div id="query-result"></div>
+
+        <div class="action-buttons" id="action-buttons">
+          <button id="check-in-btn">簽到</button>
+          <button
+            id="purchase-btn"
+            style="display: none; background-color: #229c75"
+          >
+            購課
+          </button>
+          <button id="cancel-btn">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p id="verify-message" class="message">請輸入招待人員驗證碼</p>
+      <p id="scan-message" class="message hidden">
+        請「招待組人員」持掃描器進行掃描簽到
+      </p>
+
+      <div class="copyright">
+        <p>Scanner by</p>
+        <a href="https://github.com/mebjas/html5-qrcode">mebjas/html5-qrcode</a>
+        <p>Page build by 2025 GA資訊組</p>
+      </div>
+    </footer>
+    <script src="js/gasService.js"></script>
+    <script src="js/qrScanAction.js"></script>
+    <script src="js/verify.js"></script>
+
+    <script>
+      // 全局函數用於設置掃描模式，在多個js文件間共享
+      function setGlobalScanMode(mode) {
+        // 確保所有相關js文件中的currentScanMode都被更新
+        window.currentScanMode = mode;
+
+        // 更新DOM元素顯示
+        if (mode === "signin") {
+          document.getElementById("scan-message").textContent =
+            "請「招待組人員」持掃描器進行掃描簽到";
+          document.getElementById("popup-title").textContent = "簽到資料";
+          document.getElementById("type-message").textContent =
+            "要確認「身分」，不得「訪客4次」「學員剩餘0次」";
+        } else if (mode === "purchase") {
+          document.getElementById("scan-message").textContent =
+            "請「招待組人員」持掃描器進行掃描購課";
+          document.getElementById("popup-title").textContent = "購課資料";
+          document.getElementById("type-message").textContent =
+            "‼若課程前購買‼，購課完成後，仍要進行「簽到」動作";
+        }
+      }
+
+      // 獲取台北時區(UTC+8)當前日期的幫助函數
+      window.getTaipeiDate = function () {
+        let today = new Date();
+        return new Date(today.getTime() + 8 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0];
+      };
+
+      // 確保初始模式是正確的
+      window.addEventListener("DOMContentLoaded", function () {
+        window.currentScanMode = "signin";
+        // 測試台北時間
+        console.log("台北當前日期:", window.getTaipeiDate());
+      });
+    </script>
+  </body>
+</html>

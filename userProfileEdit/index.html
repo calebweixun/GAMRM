@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <base href="/GAMRM/" />
+    <!-- <base href="/" /> -->
     <!-- This is the base URL for the relative path -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +10,12 @@
 
     <title>GA使用者資料更新介面</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/userQRScan.css" />
-    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/features.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
   </head>
   <body>
     <header>
@@ -40,12 +45,39 @@
       <div id="dataContainer"></div>
     </div>
     <footer>
-      <p>此頁面提供GA人進行個人資料維護</p>
-      <br />
+      <p class="note">此頁面提供GA人進行個人資料維護</p>
       <div class="copyright">
         <p>Page build by 2025 GA資訊組</p>
       </div>
     </footer>
     <script src="js/gasService.js"></script>
+    <script>
+      // 等待 DOM 和 JS 完全加載
+      document.addEventListener("DOMContentLoaded", function () {
+        // 確保 gasService.js 中的函數已加載
+        setTimeout(function () {
+          // 修改 gasService.js 中的 qrShow 函數
+          const originalQrShow = window.qrShow;
+
+          window.qrShow = function (data) {
+            console.log("QR顯示觸發");
+
+            // 先呼叫原始函數顯示 QR 碼
+            originalQrShow(data);
+
+            // 只有在成功找到使用者資料時才隱藏表單
+            if (data.Status !== "Not Found") {
+              // 隱藏表單
+              document.querySelector(".form-container").style.display = "none";
+            } else {
+              // 確保表單在 Not Found 情況下仍然可見
+              document.querySelector(".form-container").style.display = "flex";
+            }
+          };
+
+          console.log("qrShow 函數已成功覆寫");
+        }, 500); // 給予足夠時間確保 gasService.js 加載完畢
+      });
+    </script>
   </body>
 </html>

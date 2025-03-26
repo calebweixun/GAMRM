@@ -1,0 +1,312 @@
+/* QR 掃描相關樣式 */
+#qr-reader {
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* 彈出視窗樣式 */
+.popup-window {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  max-height: 80%;
+  background-color: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.popup-window.visible {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  text-align: center;
+}
+
+#query-result {
+  max-width: 100%;
+  overflow: auto;
+  word-wrap: break-word;
+  text-align: center;
+  width: 100%;
+}
+
+#query-result p {
+  padding: 8px 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* 數據顯示容器 */
+.data-container {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* QR 顯示區域 */
+.qr-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0px auto;
+  text-align: center;
+}
+
+/* 資料輸入區域 */
+.input-area {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.input-area label {
+  width: 35%;
+  max-width: 40%;
+  text-align: right;
+}
+
+.input-area select,
+.input-area input {
+  width: 60%;
+  max-width: 60%;
+  box-sizing: border-box;
+}
+
+/* 按鈕組 */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.action-buttons button {
+  flex: 1;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#cancel-btn {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+/* 個人頭像上傳 */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 特殊狀態樣式 */
+input:disabled,
+select:disabled,
+button:disabled,
+input[type="button"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #cccccc;
+}
+
+/* 響應式調整 */
+@media screen and (max-width: 600px) {
+  .input-area {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .input-area label,
+  .input-area select,
+  .input-area input {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .popup-window {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+/* 裁切工具相關樣式 */
+.cropper-container {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto;
+  overflow: hidden;
+}
+
+#image {
+  max-width: 100%;
+  display: block;
+}
+
+/* 特定按鈕顏色 */
+button.crop-btn-green {
+  background-color: #45a049;
+}
+
+button.crop-btn-red {
+  background-color: #f44336;
+}
+
+@media screen and (max-width: 600px) {
+  .cropper-container {
+    max-width: 100%;
+  }
+}
+
+/* 通知樣式 */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 350px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 25px 20px;
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.notification.show {
+  opacity: 1;
+  animation: popIn 0.5s forwards;
+}
+
+.notification.fade-out {
+  opacity: 0;
+  animation: fadeOut 1s forwards;
+}
+
+.notification-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #4caf50;
+}
+
+.notification-icon .material-icons {
+  font-size: 40px;
+  color: white;
+}
+
+.notification h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.notification p {
+  color: #666;
+  font-size: 16px;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Material Icons 樣式 */
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* 預設大小 */
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}

@@ -2,6 +2,8 @@
 <html lang="zh-Hant">
   <head>
     <base href="/GAMRM/" />
+    <!-- <base href="/" /> -->
+
     <!-- This is the base URL for the relative path -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +11,7 @@
     <title>Global Act 資訊入口</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="css/userQRScan.css" />
-    <link rel="stylesheet" href="css/userProfileEdit.css" />
+    <link rel="stylesheet" href="css/features.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -22,71 +23,105 @@
         <img src="img/logo.png" alt="logo" />
       </div>
     </header>
-    <div class="container">
-      <h2>💁🏻‍♂️💁🏻‍♀️ GA人這邊請</h2>
-      <button class="button" onclick="location.href='userQRshow'">
-        <i class="material-icons">qr_code</i> 個人簽到用QR顯示
-      </button>
-      <button class="button" onclick="location.href='userProfileEdit'">
-        <i class="material-icons">person</i> 個人資料修改/維護
-      </button>
-      <button
-        class="button"
-        onclick="window.open('https://forms.gle/aRtUcPmF3ATxUxiv6', '_blank')"
-      >
-        <i class="material-icons">add_a_photo</i> 個人大頭貼上傳
-      </button>
-      <button
-        class="button"
-        onclick="window.open('https://forms.gle/EhGUK7k457kHPVtUA', '_blank')"
-      >
-        <i class="material-icons">bolt</i> GA Action 行動達成回報
-      </button>
-    </div>
-    <div class="container">
-      <h2>🙋🏻‍♂️ 新朋友來這邊 🙋🏻‍♀️</h2>
-      <button
-        class="button"
-        onclick="location.href='userCreate'"
-        style="background-color: #3377dc"
-      >
-        <i class="material-icons">person_add</i> 註冊加入GA
-      </button>
-    </div>
-    <div class="container">
-      <h2>🙆🏻‍♀️ 加入LINE群組 🙆🏻‍♂️</h2>
-      <button
-        class="button"
-        onclick="window.open('https://line.me/ti/g/JY8QzwVwkT', '_blank')"
-        style="background-color: #229c75"
-      >
-        <i class="material-icons">group</i> GA行銷實體現場群組
-      </button>
-      <button
-        class="button"
-        onclick="window.open('https://line.me/ti/g/XdEvPyxDKu', '_blank')"
-        style="background-color: #229c75"
-      >
-        <i class="material-icons">group</i> 行銷不懂就問GA
-      </button>
-    </div>
 
-    <div class="container">
-      <h2>🧑🏻‍💻 工作人員專用 👩🏻‍💻</h2>
-      <button
-        class="button"
-        onclick="location.href='userQRScan'"
-        style="background-color: #dc8533"
-      >
-        <i class="material-icons">barcode_reader</i> 招待組簽到掃描
-      </button>
+    <div class="main-content">
+      <div class="tabs">
+        <button class="tab-button active" onclick="showTab('tab1')">
+          <i class="material-icons">home</i> 主頁/新朋友
+        </button>
+        <button class="tab-button" onclick="showTab('tab2')">
+          <i class="material-icons">person</i> GA人專用
+        </button>
+      </div>
+
+      <div id="tab1" class="tab-content active">
+        <div class="container">
+          <h2>🙋🏻‍♂️ 新朋友來這邊 🙋🏻‍♀️</h2>
+          <button
+            class="button"
+            onclick="location.href='userCreate'"
+            style="background-color: #3377dc"
+          >
+            <i class="material-icons">person_add</i> 註冊加入GA
+          </button>
+        </div>
+
+        <div class="container">
+          <h2>🙆🏻‍♀️ 加入LINE群組 🙆🏻‍♂️</h2>
+          <button
+            class="button"
+            onclick="window.open('https://line.me/ti/g/JY8QzwVwkT', '_blank')"
+            style="background-color: #229c75"
+          >
+            <i class="material-icons">group</i> GA行銷實體現場群組
+          </button>
+          <button
+            class="button"
+            onclick="window.open('https://line.me/ti/g/XdEvPyxDKu', '_blank')"
+            style="background-color: #229c75"
+          >
+            <i class="material-icons">group</i> 行銷不懂就問GA
+          </button>
+        </div>
+      </div>
+
+      <div id="tab2" class="tab-content">
+        <div class="container">
+          <h2>💁🏻‍♂️💁🏻‍♀️ GA人這邊請</h2>
+          <button class="button" onclick="location.href='userQRshow'">
+            <i class="material-icons">qr_code</i> 個人QR與Action查詢
+          </button>
+          <button class="button" onclick="location.href='userProfileEdit'">
+            <i class="material-icons">person</i> 個人資料修改/維護
+          </button>
+          <button
+            class="button"
+            onclick="window.open('https://forms.gle/aRtUcPmF3ATxUxiv6', '_blank')"
+          >
+            <i class="material-icons">add_a_photo</i> 個人大頭貼上傳
+          </button>
+          <button
+            class="button"
+            onclick="window.open('https://forms.gle/EhGUK7k457kHPVtUA', '_blank')"
+          >
+            <i class="material-icons">bolt</i> GA Action 行動達成回報
+          </button>
+        </div>
+
+        <div class="container">
+          <h2>🧑🏻‍💻 工作人員專用 👩🏻‍💻</h2>
+          <button
+            class="button"
+            onclick="location.href='staffScaner'"
+            style="background-color: #dc8533"
+          >
+            <i class="material-icons">barcode_reader</i> 工作人員專用掃描系統
+          </button>
+        </div>
+      </div>
     </div>
 
     <footer>
-      <br />
       <div class="copyright">
         <p>Page build by 2025 GA資訊組</p>
       </div>
     </footer>
+
+    <script>
+      function showTab(tabId) {
+        // 隱藏所有分頁內容
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        // 移除所有分頁按鈕的活動狀態
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.remove("active");
+        });
+        // 顯示選中的分頁內容
+        document.getElementById(tabId).classList.add("active");
+        // 設置選中分頁按鈕的活動狀態
+        event.currentTarget.classList.add("active");
+      }
+    </script>
   </body>
 </html>
