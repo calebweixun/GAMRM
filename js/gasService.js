@@ -209,7 +209,7 @@ function qrShow(data) {
 
     container.innerHTML = `
       <div class="data-container" style="display: flex; gap: 0px;">
-        <h2 style="color: #DC4E33; font-weight: bold; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000; font-size: 32px; margin-top: 5px; margin-bottom: 0px;">${data.GAID}</h2>
+        <h2 style="color: #DC4E33; font-weight: bold; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000; font-size: 32px; margin-top: 5px; margin-bottom: 0px;">${data.GAID}@${data.Level}</h2>
         <h2 style="margin-top: 0; margin-bottom: 5px;">${data.Name || ""}<br\>${data.NickName || ""}</h2>
         <div class="qr-area" style="margin-bottom: 0;">
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
