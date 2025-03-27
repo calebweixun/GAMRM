@@ -34,6 +34,7 @@ async function onScanSuccess(decodedText, decodedResult) {
   try {
     // 查詢用戶資料
     data = await qrSignIn(decodedText);
+    data.GAID = decodedText;
     console.log("data", data);
 
     // 隱藏處理中通知
@@ -55,6 +56,10 @@ async function onScanSuccess(decodedText, decodedResult) {
     <div style="text-align: center; width: 100%;">
       <table style="width: 100%; border-collapse: collapse; margin: 0 auto 15px auto; max-width: 320px;">
         <tr>
+          <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">姓名：</td>
+          <td style="padding: 5px; text-align: left;">${data.GAID || ""}</td>
+        </tr>
+      <tr>
           <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">姓名：</td>
           <td style="padding: 5px; text-align: left;">${data.Name || ""}</td>
         </tr>
@@ -230,7 +235,7 @@ document
         showProcessingNotification("簽到處理中...");
 
         // 使用 checkinClass 函數進行簽到
-        const result = await checkinClass(staffEmail, data.GAID, "週四實體課程", remark);
+        const result = await checkinClass(staffEmail, data.GAID, "週四實體聚集", remark);
 
         if (result.success) {
           // 顯示成功通知
