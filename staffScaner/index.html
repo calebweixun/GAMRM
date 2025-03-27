@@ -242,7 +242,7 @@
   <body>
     <!-- Logo -->
     <header>
-      <div class="logo">
+      <div class="logo" id="logo">
         <a href="index.html">
           <img src="img/logo.png" alt="logo" />
         </a>
@@ -279,7 +279,7 @@
     </div>
 
     <!-- 提示訊息 (隱藏) -->
-    <p id="type-message"></p>
+    <p id="type-message" style="width: 90%; max-width: 400px; margin: 0 auto; font-weight: bold; font-style: italic;"></p>
 
     <!-- QR Code Scanner -->
     <div id="qr-reader" style="display: none"></div>
@@ -323,12 +323,12 @@
           document.getElementById("scan-message").textContent =
             "請「招待組人員」持掃描器進行掃描簽到";
           document.getElementById("type-message").textContent =
-            "要確認「身分」，不得「訪客4次」「學員剩餘0次」";
+            "請確認學員「身分」\n注意「課程剩餘次數」";
         } else if (mode === "purchase") {
           document.getElementById("scan-message").textContent =
             "請「招待組人員」持掃描器進行掃描購課";
           document.getElementById("type-message").textContent =
-            "‼若課程前購買‼，購課完成後，仍要進行「簽到」動作";
+            "！！若是在課程前購買！！\n購課完成後仍要進行「簽到」動作";
         }
       }
 

@@ -29,6 +29,7 @@ function verify_qrscan() {
     document.getElementById("verify-container").style.display = "none";
     document.getElementById("staff-function-tabs").style.display = "flex";
     document.getElementById("qr-reader").style.display = "block";
+    document.getElementById("logo").style.display = "none";
 
     // 切換顯示訊息
     document.getElementById("verify-message").style.display = "none";

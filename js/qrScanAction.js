@@ -56,7 +56,7 @@ async function onScanSuccess(decodedText, decodedResult) {
     <div style="text-align: center; width: 100%;">
       <table style="width: 100%; border-collapse: collapse; margin: 0 auto 15px auto; max-width: 320px;">
         <tr>
-          <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">姓名：</td>
+          <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">GAID：</td>
           <td style="padding: 5px; text-align: left;">${data.GAID || ""}</td>
         </tr>
       <tr>
