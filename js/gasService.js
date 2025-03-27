@@ -301,7 +301,7 @@ function qrShow(data) {
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Grow</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Grow || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">出席次數 7+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">出席次數 6+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Share</td>
@@ -309,7 +309,7 @@ function qrShow(data) {
               <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">分享筆記、貼文、限動 7+</td>
             </tr>
           </table>
-          <p style="margin-top: 5px; font-size: 12px; color: #666; font-style: italic;">※ Action 次數為人工認列，若尚未更新，敬請等候人員處理</p>
+          <p style="margin-top: 5px; font-size: 12px; color: #666; font-style: italic;">※ Action 次數為人工認列<br\>若尚未更新，敬請等候人員處理</p>
         </div>
       </div>
         `;
