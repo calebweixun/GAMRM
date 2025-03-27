@@ -6,11 +6,12 @@ const taiwanMobileRegex = /^09[0-9]\d{7}$/;
 
 async function qrSignIn(gaid) {
     const signbtn = document.getElementById("action-buttons");
-    signbtn.style.display = "none";
+    if (signbtn) signbtn.style.display = "none";
 
     console.log(gaid);
 
-    document.getElementById("loading").style.display = "block";
+    const loadingElement = document.getElementById("loading");
+    if (loadingElement) loadingElement.style.display = "block";
     document.body.style.cursor = "wait";
 
     var params = new URLSearchParams({
@@ -28,58 +29,13 @@ async function qrSignIn(gaid) {
         let data = await response.json();
 
         document.body.style.cursor = "default";
-        document.getElementById("loading").style.display = "none";
-
-        let container = document.getElementById("query-result");
-        // 更新內容顯示
-
-        // 獲取提示訊息
-        const typeMessage = document.getElementById("type-message").textContent;
-
-        // 使用表格顯示用戶資料，標題置中
-        container.innerHTML = `
-        <div style="text-align: center; width: 100%;">
-            <table style="width: 100%; border-collapse: collapse; margin: 0 auto 15px auto; max-width: 320px;">
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold; width: 40%;">姓名：</td>
-                <td style="padding: 5px; text-align: left;">${data.Name || ""}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">暱稱：</td>
-                <td style="padding: 5px; text-align: left;">${data.NickName || ""}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">身分：</td>
-                <td style="padding: 5px; text-align: left;">${data.Role || ""}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">等級：</td>
-                <td style="padding: 5px; text-align: left;">${data.Level || ""}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">公會：</td>
-                <td style="padding: 5px; text-align: left;">${data.Guild || ""}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">本季簽到次數：</td>
-                <td style="padding: 5px; text-align: left;">${data.signInCount || "0"}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; text-align: right; font-weight: bold;">本季購課剩餘：</td>
-                <td style="padding: 5px; text-align: left;">${data.purchaseRemaining || "0"}</td>
-            </tr>
-            </table>
-            <p style="margin-top: 10px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">${document.getElementById("type-message").textContent}</p>
-
-        </div>
-            `;
-
-        signbtn.style.display = "block";
+        if (loadingElement) loadingElement.style.display = "none";
+        if (signbtn) signbtn.style.display = "block";
 
         return data;
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById("loading").style.display = "none";
+        if (loadingElement) loadingElement.style.display = "none";
         showErrorNotification("連線時發生錯誤，請稍後再試！");
         return null;
     }
@@ -259,7 +215,19 @@ function qrShow(data) {
           <img src='https://quickchart.io/qr?size=250x250&text=${data.GAID}' alt="gaid-qrcode">
         </div>
         <p style="margin: 2px 0;">${data.Role || ""}@${data.Guild || ""}</p>
-        
+        <div style="margin-top: 10px; width: 100%;">
+          <h3 style="margin-bottom: 5px;">本季可上課次數</h3>
+          <table style="width: 100%; table-layout: fixed; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd; font-size: 14px;">
+            <tr>
+              <td style="padding: 6px; text-align: right; border: 1px solid #ddd; width: 50%; background-color: #FFE2E2;">剩餘課程數量：</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd;">${data.purchaseRemaining || 0}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px; text-align: right; border: 1px solid #ddd; background-color: #FFE2E2;">上次購買日期：</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd;">${data.purchaseDate || "無購買紀錄"}</td>
+            </tr>
+          </table>
+        </div>
         <div style="margin-top: 10px; width: 100%;">
           <h3 style="margin-bottom: 5px;">本季 GA Action 認列紀錄</h3>
           <table style="width: 100%; table-layout: fixed; margin: 0 auto; border-collapse: collapse; border: 1px solid #ddd; font-size: 14px;">
@@ -570,5 +538,104 @@ async function createUserData() {
         console.error("請求失敗", error);
         alert("發生錯誤，請稍後再試。");
         return { success: false };
+    }
+}
+
+async function purchaseClass(staff_mail, gaid, item) {
+    try {
+        var params = new URLSearchParams({
+            action: "staff_purchaseClass",
+            staff_mail: staff_mail,
+            gaid: gaid,
+            item: item
+        });
+
+        const response = await fetch(url + "?" + params.toString(), {
+            method: "GET",
+        });
+
+        // 檢查響應狀態
+        if (!response.ok) {
+            throw new Error(`伺服器回應狀態: ${response.status}`);
+        }
+
+        // 檢查響應內容是否為空
+        const text = await response.text();
+        if (!text || text.trim() === '') {
+            console.error("伺服器回應為空");
+            return { success: false, error: "伺服器回應為空" };
+        }
+
+        // 解析JSON
+        let result;
+        try {
+            result = JSON.parse(text);
+        } catch (jsonError) {
+            console.error("JSON解析錯誤:", jsonError, "原始回應:", text);
+            return { success: false, error: "JSON解析錯誤", rawResponse: text };
+        }
+
+        console.log(result);
+
+        if (result.Status === "Success") {
+            return { success: true, data: result };
+        } else {
+            alert("購買失敗：" + (result.Message || "未知錯誤"));
+            return { success: false, message: result.Message };
+        }
+    } catch (error) {
+        console.error("請求失敗", error);
+        alert("發生錯誤，請稍後再試。");
+        return { success: false, error: error.message };
+    }
+}
+
+async function checkinClass(staff_mail, gaid, item, remark) {
+    try {
+        var params = new URLSearchParams({
+            action: "staff_checkinClass",
+            staff_mail: staff_mail,
+            gaid: gaid,
+            item: item,
+            remark: remark
+        });
+
+        const response = await fetch(url + "?" + params.toString(), {
+            method: "GET",
+        });
+
+        // 檢查響應狀態
+        if (!response.ok) {
+            throw new Error(`伺服器回應狀態: ${response.status}`);
+        }
+
+        // 檢查響應內容是否為空
+        const text = await response.text();
+        if (!text || text.trim() === '') {
+            console.error("伺服器回應為空");
+            return { success: false, error: "伺服器回應為空" };
+        }
+
+        // 解析JSON
+        let result;
+        try {
+            result = JSON.parse(text);
+        } catch (jsonError) {
+            console.error("JSON解析錯誤:", jsonError, "原始回應:", text);
+            return { success: false, error: "JSON解析錯誤", rawResponse: text };
+        }
+
+        console.log(result);
+
+        if (result.Status === "Success") {
+            return { success: true, data: result };
+        } else {
+            alert("簽到失敗：" + (result.Message || "未知錯誤"));
+            return { success: false, message: result.Message };
+        }
+    } catch (error) {
+        console.error("請求失敗", error);
+        alert("發生錯誤，請稍後再試。");
+        return { success: false, error: error.message };
     }
 }

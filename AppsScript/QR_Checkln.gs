@@ -13,7 +13,7 @@ function getUserInfoByGAID(id) {
   }
 
   var rowIndex = foundCell.getRow();
-  var userInfo = sheet.getRange(rowIndex, 1, 1, 11).getValues();
+  var userInfo = sheet.getRange(rowIndex, 1, 1, 12).getValues();
 
   if (!userInfo || userInfo.length === 0 || userInfo[0].length < 9) {
     return {
@@ -43,6 +43,7 @@ function getUserInfoByGAID(id) {
     Level: userInfo[0][8],
     signInCount: userInfo[0][9],
     purchaseRemaining: remaining,
+    purchaseDate: userInfo[0][11],
     // Give: action.Give,
     // Care: action.Care,
     // Empower: action.Empower,

@@ -15,7 +15,7 @@ function getUserInfoByEmail(email) {
   }
 
   var rowIndex = foundCell.getRow();
-  var userInfo = sheet.getRange(rowIndex, 1, 1, 11).getValues();
+  var userInfo = sheet.getRange(rowIndex, 1, 1, 12).getValues();
 
   if (!userInfo || userInfo.length === 0 || userInfo[0].length < 9) {
     return {
@@ -44,6 +44,7 @@ function getUserInfoByEmail(email) {
     Level: userInfo[0][8],
     signInCount: userInfo[0][9],
     purchaseRemaining: remaining,
+    purchaseDate: userInfo[0][11],
     Give: action.Give,
     Care: action.Care,
     Empower: action.Empower,
@@ -97,10 +98,18 @@ function createUser(email, name, nickname, phone, lineId, guild) {
       [gaid, email, name, nickname, formattedPhone, lineId, guild, '訪客']
     ]);
 
-    return { Status: "Success", Message: "使用者資料已建立", GAID: gaid };
+    // 執行購買紀錄建立，確保此步驟完成
+    var purchaseResult = purchaseClass('calebweixun@gmail.com', gaid, '訪客體驗(4堂)');
+    
+    // 檢查購買紀錄是否成功建立
+    if (purchaseResult.Status === "Success") {
+      return { Status: "Success", Message: "使用者資料已建立", GAID: gaid };
+    } else {
+      // 如果購買紀錄建立失敗，返回錯誤訊息
+      return { Status: "Warning", Message: "使用者資料已建立，但購買紀錄建立失敗: " + purchaseResult.Message, GAID: gaid };
+    }
 
   } catch (error) {
     return { Status: "Error", Message: error.toString() };
   }
 }
-

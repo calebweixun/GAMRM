@@ -69,48 +69,53 @@
         transform: translate(-50%, -50%);
         width: 90%;
         max-width: 350px;
-        background-color: #fff;
+        background-color: white;
         border-radius: 12px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         padding: 25px 20px;
         text-align: center;
-        z-index: 1000;
+        z-index: 1200;
+        transition: opacity 0.5s, transform 0.5s;
+      }
+
+      .notification.hidden {
+        display: none;
         opacity: 0;
-        transition: opacity 0.8s ease-in-out, transform 0.5s ease-in-out;
       }
 
       .notification.show {
+        display: block;
         opacity: 1;
-        animation: popIn 0.5s forwards;
       }
 
       .notification.fade-out {
         opacity: 0;
-        animation: fadeOut 1s forwards;
+        transform: translate(-50%, -60%);
       }
 
       .notification-icon {
+        margin: 0 auto 15px;
         width: 60px;
         height: 60px;
-        margin: 0 auto 15px;
+        border-radius: 50%;
         display: flex;
-        justify-content: center;
         align-items: center;
-        background-color: white;
+        justify-content: center;
       }
 
       .notification-icon i {
-        font-size: 48px;
+        font-size: 40px;
       }
 
       .notification h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
+        margin: 10px 0;
+        font-size: 20px;
         font-weight: bold;
       }
 
       .notification p {
-        font-size: 16px;
+        margin: 15px 0 5px;
+        color: #666;
       }
 
       .hidden {
@@ -225,6 +230,13 @@
           font-size: 13px !important;
         }
       }
+
+      /* 自定義按鈕樣式 */
+      .action-buttons button {
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -237,11 +249,11 @@
       </div>
     </header>
 
-    <!-- 密碼驗證區塊 -->
+    <!-- email驗證區塊 -->
     <div class="container" id="verify-container">
       <div class="form-container">
-        <label for="password">請輸入招待人員用密碼</label>
-        <input type="password" id="password" placeholder="請輸入密碼" />
+        <label for="staff-email">請輸入招待人員個人 Email</label>
+        <input type="email" id="staff-email" placeholder="請輸入您的 Email" />
         <input
           type="button"
           id="verifyBtn"
@@ -273,29 +285,19 @@
     <div id="qr-reader" style="display: none"></div>
 
     <!-- 彈出式視窗 -->
-    <div id="popup-window" class="popup-window">
-      <div class="popup-content">
-        <h2 id="popup-title">GAID檢核中</h2>
-        <div id="loading">
-          <h2 id="loading-text">正在確認資料，請稍候...</h2>
-        </div>
+    <div id="popup-window" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center;">
+      <div style="background-color: white; padding: 20px; border-radius: 8px; max-width: 90%; width: 350px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
         <div id="query-result"></div>
-
-        <div class="action-buttons" id="action-buttons">
-          <button id="check-in-btn">簽到</button>
-          <button
-            id="purchase-btn"
-            style="display: none; background-color: #229c75"
-          >
-            購課
-          </button>
-          <button id="cancel-btn">取消</button>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+          <button id="check-in-btn" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; margin: 0 5px; border-radius: 4px; cursor: pointer;">簽到</button>
+          <button id="purchase-btn" style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; margin: 0 5px; border-radius: 4px; cursor: pointer;">購課</button>
+          <button id="cancel-btn" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; margin: 0 5px; border-radius: 4px; cursor: pointer;">取消</button>
         </div>
       </div>
     </div>
 
     <footer>
-      <p id="verify-message" class="message">請輸入招待人員驗證碼</p>
+      <p id="verify-message" class="message">請輸入招待人員個人 Email</p>
       <p id="scan-message" class="message hidden">
         請「招待組人員」持掃描器進行掃描簽到
       </p>
@@ -320,13 +322,11 @@
         if (mode === "signin") {
           document.getElementById("scan-message").textContent =
             "請「招待組人員」持掃描器進行掃描簽到";
-          document.getElementById("popup-title").textContent = "簽到資料";
           document.getElementById("type-message").textContent =
             "要確認「身分」，不得「訪客4次」「學員剩餘0次」";
         } else if (mode === "purchase") {
           document.getElementById("scan-message").textContent =
             "請「招待組人員」持掃描器進行掃描購課";
-          document.getElementById("popup-title").textContent = "購課資料";
           document.getElementById("type-message").textContent =
             "‼若課程前購買‼，購課完成後，仍要進行「簽到」動作";
         }

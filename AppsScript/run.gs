@@ -10,8 +10,8 @@ function doGet(e) {
 
   // 根據 action 判斷請求的動作
   if (action === 'getUserInfo') {
-    var userInfo = getUserInfoByEmail(email);
-    return ContentService.createTextOutput(JSON.stringify(userInfo))
+    var result = getUserInfoByEmail(email);
+    return ContentService.createTextOutput(JSON.stringify(result))
       .setMimeType(ContentService.MimeType.JSON);
 
   } else if (action === 'updateUserInfo') {
@@ -40,8 +40,25 @@ function doGet(e) {
       
   } else if (action ==='qrSignInGet'){ 
     var gaid = e.parameter.gaid;
-    var userInfo = getUserInfoByGAID(gaid);
-    return ContentService.createTextOutput(JSON.stringify(userInfo))
+    var result = getUserInfoByGAID(gaid);
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } else if (action ==='staff_purchaseClass'){ 
+    var staff_mail = e.parameter.staff_mail;
+    var gaid = e.parameter.gaid;
+    var item = e.parameter.item;
+    var result = purchaseClass(staff_mail, gaid, item);
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } else if (action ==='staff_checkinClass'){ 
+    var staff_mail = e.parameter.staff_mail;
+    var gaid = e.parameter.gaid;
+    var item = e.parameter.item;
+    var remark = e.parameter.remark;
+    var result = checkinClass(staff_mail, gaid, item, remark);
+    return ContentService.createTextOutput(JSON.stringify(result))
       .setMimeType(ContentService.MimeType.JSON);
   } 
 
