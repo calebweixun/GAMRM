@@ -249,32 +249,32 @@ function qrShow(data) {
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Care</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Care || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">與GA成員深度談話 2+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">與GA成員深度談話 1+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Empower</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Empower || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">邀約GA Day/Line 3+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">邀約GA Day/Line 1+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Do</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Do || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">完成工會/專案/公開任務 4+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">完成工會/專案/公開任務 2+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Love</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Love || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">探班、關懷、服務 5+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">探班、關懷、服務 2+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Grow</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Grow || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">出席次數 6+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">出席次數 3+</td>
             </tr>
             <tr>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">Share</td>
               <td style="padding: 6px; text-align: center; border: 1px solid #ddd; white-space: nowrap;">${data.Share || 0}</td>
-              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">分享筆記、貼文、限動 7+</td>
+              <td style="padding: 6px; text-align: left; border: 1px solid #ddd; white-space: nowrap; overflow: visible;">分享筆記、貼文、限動 4+</td>
             </tr>
           </table>
           <p style="margin-top: 5px; font-size: 12px; color: #666; font-style: italic;">※ Action 次數為人工認列<br\>若尚未更新，敬請等候人員處理</p>
