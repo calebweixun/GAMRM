@@ -7,7 +7,9 @@ function verify_qrscan() {
     "if038963@gmail.com",
     "ryangung922@gmail.com",
     "swps41135@gmail.com",
-    "tsengjacob94@gmail.com"
+    "tsengjacob94@gmail.com",
+    "silh5863@gmail.com",
+    "dook94214@gmail.com"
   ];
 
   // 取得使用者輸入的 email
