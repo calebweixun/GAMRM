@@ -1,17 +1,7 @@
-function verify_qrscan() {
-  // 允許的招待人員 email 列表
-  const allowedEmails = [
-    "calebweixun@gmail.com",
-    "liao1009lily@gmail.com",
-    "bandbsgarden@gmail.com",
-    "if038963@gmail.com",
-    "ryangung922@gmail.com",
-    "swps41135@gmail.com",
-    "tsengjacob94@gmail.com",
-    "silh5863@gmail.com",
-    "dook94214@gmail.com"
-  ];
+var scriptURL =
+  "https://script.google.com/macros/s/AKfycbxjXUF-tnhQHyvJJx4RPEBiymE6SlnZPx6EMDqVnrzUdYi62ROwa46betw0P66ICbT2vA/exec";
 
+function verify_qrscan() {
   // 取得使用者輸入的 email
   var inputEmail = document.getElementById("staff-email").value.trim().toLowerCase();
 
@@ -22,28 +12,54 @@ function verify_qrscan() {
     return;
   }
 
-  // 比對 email 是否在允許的列表中
-  if (allowedEmails.includes(inputEmail)) {
-    // 將 email 保存到 cookie，設置 1 天過期
-    setCookie("staff_email", inputEmail, 1);
+  // 顯示載入指示器或禁用按鈕 (可選)
+  // e.g., document.getElementById("verify-button").disabled = true;
+  // document.getElementById("loader").style.display = "block";
 
-    // Email 正確，顯示功能選擇區塊和隱藏驗證區塊
-    document.getElementById("verify-container").style.display = "none";
-    document.getElementById("staff-function-tabs").style.display = "flex";
-    document.getElementById("qr-reader").style.display = "block";
-    document.getElementById("logo").style.display = "none";
 
-    // 切換顯示訊息
-    document.getElementById("verify-message").style.display = "none";
-    document.getElementById("scan-message").style.display = "block";
+  fetch(`${scriptURL}?action=verifyStaffEmail&staff_email=${encodeURIComponent(inputEmail)}`, {
+    method: 'GET', // Apps Script doGet 預設接收 GET 請求
+    mode: 'cors' // 明確指定 CORS 模式
+  })
+    .then(response => response.json())
+    .then(data => {
+      // 隱藏載入指示器或啟用按鈕 (可選)
+      // document.getElementById("verify-button").disabled = false;
+      // document.getElementById("loader").style.display = "none";
 
-    // 初始化掃描器，並設定為簽到模式
-    setGlobalScanMode("signin");
-    startScanner();
-  } else {
-    // Email 不在允許的列表中，顯示警告訊息
-    showErrorNotification("您的 Email 不在授權名單中，拒絕存取！");
-  }
+      if (data.isValid) {
+        // 將 email 保存到 cookie，設置 1 天過期
+        setCookie("staff_email", inputEmail, 1);
+
+        // Email 正確，顯示功能選擇區塊和隱藏驗證區塊
+        document.getElementById("verify-container").style.display = "none";
+        document.getElementById("staff-function-tabs").style.display = "flex";
+        document.getElementById("qr-reader").style.display = "block";
+        document.getElementById("logo").style.display = "none";
+
+        // 切換顯示訊息
+        document.getElementById("verify-message").style.display = "none";
+        document.getElementById("scan-message").style.display = "block";
+
+        // 初始化掃描器，並設定為簽到模式
+        setGlobalScanMode("signin");
+        startScanner();
+      } else if (data.error) {
+        console.error("Error from Apps Script:", data.error);
+        showErrorNotification("驗證過程中發生錯誤，請稍後再試。");
+      }
+      else {
+        // Email 不在允許的列表中，顯示警告訊息
+        showErrorNotification("您的 Email 不在授權名單中，拒絕存取！");
+      }
+    })
+    .catch(error => {
+      // 隱藏載入指示器或啟用按鈕 (可選)
+      // document.getElementById("verify-button").disabled = false;
+      // document.getElementById("loader").style.display = "none";
+      console.error("Error fetching data from Apps Script:", error);
+      showErrorNotification("無法連接到驗證服務，請檢查您的網路連線或稍後再試。");
+    });
 }
 
 // 設置 cookie 的函數

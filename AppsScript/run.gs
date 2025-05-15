@@ -1,3 +1,16 @@
+// 全域定義允許的招待人員 Email 列表
+var ALLOWED_STAFF_EMAILS = [
+  "calebweixun@gmail.com",
+  "liao1009lily@gmail.com",
+  "bandbsgarden@gmail.com",
+  "if038963@gmail.com",
+  "ryangung922@gmail.com",
+  "swps41135@gmail.com",
+  "tsengjacob94@gmail.com",
+  "silh5863@gmail.com",
+  "dook94214@gmail.com"
+];
+
 // doGet 為被呼叫的主要程序，在經由action確認意圖並回應。
 function doGet(e) {
   var action = e.parameter.action;
@@ -60,7 +73,17 @@ function doGet(e) {
     var result = checkinClass(staff_mail, gaid, item, remark);
     return ContentService.createTextOutput(JSON.stringify(result))
       .setMimeType(ContentService.MimeType.JSON);
-  } 
+
+  } else if (action === 'verifyStaffEmail') {
+    var staff_email_param = e.parameter.staff_email; // 使用不同的變數名稱以避免與外層 email 變數衝突
+    if (!staff_email_param) {
+      return ContentService.createTextOutput(JSON.stringify({ error: 'Email parameter is missing' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    var isValid = ALLOWED_STAFF_EMAILS.includes(staff_email_param.trim().toLowerCase());
+    return ContentService.createTextOutput(JSON.stringify({ isValid: isValid }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 
   var errorResponse = {
     status: 'error',
